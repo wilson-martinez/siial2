@@ -1,9 +1,7 @@
-<%-- 
-    Document   : Devolucion
-    Created on : 11-oct-2016, 13:39:26
-    Author     : WILSON
---%>
 
+
+
+<%@page import="Logica_Negocio.Planilla_LN"%>
 
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.ResultSet"%>
@@ -155,21 +153,31 @@
             </form>
           </tbody>
         </table>
+               <div id="Listar_Planillas_Consolidadas"></div>
       </div>
     </div>
    </div>
+       <center> <input type="Button" class="btn btn-primary" id="Btn_Consolidado" Name="Btn_Consolidado" value="CONSOLIDAR PLANILLAS" class="registrar"> </center> 
+  
+         
 </div>
-                        
+  
+   
+            
+            
+            
+   
+            
 
        
 <br> 
+
+
                            
-      <div id="Lista_Plan_Completadas">  
-          </div>             
+      <div id="Lista_Plan_Completadas">   </div>
+                      
        
-      <center> <input type="Button" class="btn btn-primary" id="Btn_Consolidado" Name="Btn_Consolidado" value="CONSOLIDAR PLANILLAS" class="registrar"> </center> 
-  
-      
+     
         </div>         
                
         <table width="102%" border="0" align="left">
@@ -229,42 +237,91 @@
     
     
        $(function(){
-                       
+           
+        Listar_Planillas_Consolidadas (); 
          Buscar_Existencia_Codigo_Consolidado (); 
          Listar_Planillas_Abastecimmiento_Completada();
-        // Listar_Consolidado_Planilla();
-                     
+             
             });   
     
     
    
-   
- function  Asignar_Planilla_Consolidado(Id_Planilla){
-     
-     Listar_Consolidado_Planilla(Id_Planilla);
-    $( "#Listar_Consolidado_Planilla" ).dialog( "open" );
+      
+ function  Eliminar_Planilla_Consolidado(Id_Planilla,Id_Consolidado){
      
      
+                        var Id_Plan= Id_Planilla;
+                        var Id_Consol= Id_Consolidado;
+       
+			$.post('../..//Consolidado', {
+                          Eliminar_Planilla_Consolidado : "Eliminar_Planilla_Consolidado",
+                          Id_Planilla : Id_Plan,
+                          Id_Consolidado : Id_Consol
+                          
+                       
+			}, function(responseText) {
+                          
+                           Listar_Planillas_Abastecimmiento_Completada ();
+                           Listar_Planillas_Consolidadas ();
+                              //  $('#Lista_Plan_Completadas').html(responseText);
+      
+			}); 
  }
    
+   
+   
+ function  Agregar_Planilla_Consolidado(Id_Planilla){
+
+         var  Cod_Cons = $('#Cod_Consolidado').val();
+         var Cod_Plan = Id_Planilla;
+                    
+			$.post('../..//Consolidado', {
+                          Agregar_Planilla_Consolidado : "Agregar_Planilla_Consolidado",
+                          Cod_Planilla : Cod_Plan,
+                          Cod_Consolidado : Cod_Cons
+			}, function(responseText) {
+                            Listar_Planillas_Abastecimmiento_Completada ();
+                             Listar_Planillas_Consolidadas ();
+                              //  alert(responseText);
+                              //  $('#Lista_Plan_Completadas').html(responseText);
+			}); 
+
+ }
+   
+ 
   
-    
-  function Listar_Planillas_Abastecimmiento_Completada (){
-      
-      
+  function Listar_Planillas_Abastecimmiento_Completada ()
+                {
+     
                       var  Cod_Unidad = $('#Cod_Unidad').val();
                      
 			$.post('../..//Consolidado', {
                           Listar_Planillas_Abastecimmiento_Finalizadas : "Listar_Planillas_Abastecimmiento_Finalizadas",
                           Cod_Unidad : Cod_Unidad
 			}, function(responseText) {
-                        
+                              
                                 $('#Lista_Plan_Completadas').html(responseText);
+			}); 
+        }  
+  
+  
+    
+  function Listar_Planillas_Consolidadas (){
+ 
+                          var  Cod_Cons = $('#Cod_Consolidado').val();
+                     
+			$.post('../..//Consolidado', {
+                          Listar_Planillas_Consolidadas : "Listar_Planillas_Consolidadas",
+                          Cod_Consolidado : Cod_Cons
+			}, function(responseText) {
+                              
+                         //  alert(responseText);
+                    $('#Listar_Planillas_Consolidadas').html(responseText);
                                
 
 			}); 
       
-  }  
+            }  
     
  
     
@@ -278,7 +335,10 @@
                           Cod_Unidad : Cod_Unidad
 			}, function(responseText) {
                      
+                     
+                            $('#Cod_Consolidado').html("");
                             $('#Cod_Consolidado').val(responseText);
+                         
                     
                              if($('#Cod_Consolidado').val()!='')
                                     {
@@ -299,26 +359,13 @@
 $(document).ready(function() {
 		$('#Btn_Consolidado').click(function(event) {
 
-              
+              Listar_Planillas_Consolidadas ();
                       var  Cod_Unidad = $('#Cod_Unidad').val();
-                      var List_Plani = $('#List_Planillas').val(); 
-                     
-			$.post('../..//Consolidado', {
-                          Consolidadar_Planilla : "Consolidadar_Planilla",
-                          Cod_Unidad : Cod_Unidad,
-                          List_Planillas : List_Plani
-			}, function(responseText) {
-                     
-                            alert(responseText);
-                     
-                                 
-                        
-                        
-			}); 
-                    
-                    
-                    
+                   
                       
+                   
+                  
+                 
 	
 		});
 	});
@@ -336,7 +383,7 @@ $(document).ready(function() {
 
               
                       var  Cod_Unidad = $('#Cod_Unidad').val();
-                     
+                      
 			$.post('../..//Consolidado', {
                           Generar_Codigo_Consolidado : "Generar_Codigo_Consolidado",
                           Cod_Unidad : Cod_Unidad
@@ -348,11 +395,8 @@ $(document).ready(function() {
                         
                         
 			}); 
-                    
-                    
-                    
-                      
-	
+                       
+  
 		});
 	});
     
