@@ -13,8 +13,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Logica_Negocio.Consolidado_LN;
 import Entidad_Negocio.Consolidado_EN;
+import Logica_Negocio.Consolidado_Planilla_LN;
 import Logica_Negocio.Planilla_LN;
 import Logica_Negocio.Planilla_Soldado_LN;
+import Logica_Negocio.Planilla_LN;
+import Entidad_Negocio.Consolidado_Planilla_EN;
 import java.sql.ResultSet;
 import java.text.DateFormat;
 import java.text.DecimalFormat;
@@ -81,17 +84,264 @@ public class Consolidado extends HttpServlet {
           
           
           
-          if(request.getParameter ("Consolidadar_Planilla") !=null )
-                {  
+            if (request.getParameter("Finalizar_Consolidado") != null)
+                {
+
+                   
+                   Consolidado_LN Cons_LN = new Consolidado_LN();
+                   
+                     Integer Cod_Consolidado = Integer.parseInt(request.getParameter ("Cod_Consolidado"));
                     
-                     String Sold_selec[] = request.getParameterValues("List_Planillas"); 
-                    out.println(""+ Sold_selec.length);
+           
+                    if(Cons_LN.Finalizar_Consolidados(Cod_Consolidado))
+                    
+                    {
+                     out.println("CONSOLIDADO Nº. :"+Cod_Consolidado+" FINALIZADO" );
+                    
+                    }
+                    else{out.println("NO SE FINALIZO EL CONSOLIDADO" );}
+                    
                     
                 }
           
           
           
           
+          
+          
+          
+           if (request.getParameter("Eliminar_Planilla_Consolidado") != null)
+                {
+
+                    Planilla_LN Plan_LN = new Planilla_LN();
+                    Consolidado_Planilla_LN Cons_Plan_LN = new Consolidado_Planilla_LN(); 
+                     Integer Cod_Consolidado = Integer.parseInt(request.getParameter ("Id_Consolidado"));
+                    Integer Id_Planilla = Integer.parseInt(request.getParameter ("Id_Planilla"));
+           
+                    if(Cons_Plan_LN.Eliminar_Planilla_Consolidado(Id_Planilla,Cod_Consolidado))
+                    
+                    {
+                     Plan_LN.Actualizar_Estado_Planilla(Id_Planilla,"Finalizado");
+                    
+                    }
+                }
+          
+          
+      
+          
+         if (request.getParameter("Listar_Planillas_Consolidadas") != null)
+         {
+
+              ResultSet Rs =null;
+             
+              
+           Integer Cod_Consolidado = Integer.parseInt(request.getParameter("Cod_Consolidado"));
+            
+            
+             Consolidado_Planilla_LN Cons_Plan_LN = new Consolidado_Planilla_LN();
+             
+        
+                out.println("<center><table border='1' class='table table-bordered table-hover'>"); 
+               
+                out.println("<tbody>");
+                out.println("<tr width=\'250\'>");
+                out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>MODALIDAD</b></td>");
+                out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>DIAS</b></td>");
+                         out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>SL</b></td>"); 
+                out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>ESTANCIA</b></td>");
+                out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>SECOS</b></td>");
+                out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>FRESCOS</b></td>");
+        
+               
+                out.println("<td align='center' bgcolor='#F2F2F2'><b>Eliminar</b></td> ");    
+                Integer Dias_Abast=0;
+                Integer Dias_Rac=0;
+                Integer Sold_Abast=0;
+                Integer Sold_Raci=0;
+                float Estancia=0;
+                float Secos =0;
+                float Frescos =0;
+              
+                
+               
+           try{
+            
+               
+                Rs = Cons_Plan_LN.Listar_Planillas_Consolidadas(Cod_Consolidado);
+                
+                while(Rs.next()) {
+                 if (Rs.getString("Tipo_Ciclo").equals("Abastecimiento")){
+                    
+                 Dias_Abast= Dias_Abast + Integer.parseInt(Rs.getString("Dias_Abas"));
+                 Sold_Abast = Sold_Abast + Integer.parseInt(Rs.getString("Sl_Abas"));
+                 Estancia = Float.parseFloat(Rs.getString("Val_Estancia"));
+                 Secos = Secos + Float.parseFloat(Rs.getString("Secos"));
+                 Frescos = Frescos + Float.parseFloat(Rs.getString("Frescos"));
+                
+                 out.println("<tr><td align='center'>"+Rs.getString("Tipo_Ciclo")+ "</td>");
+                 out.println("<td align='center'>"+Rs.getString("Dias_Abas")+"</td>"); 
+                 out.println("<td align='center'>"+Rs.getString("Sl_Abas")+"</td>");
+                 out.println("<td align='center'>"+Rs.getString("Val_Estancia")+ "</td>");
+                 out.println("<td align='center'>"+Rs.getString("Secos")+"</td>");
+                 out.println("<td align='center'>"+Rs.getString("Frescos")+"</td>");
+                 out.println("<td align='center' ><A href='javascript:Eliminar_Planilla_Consolidado(" + Rs.getString("Planilla") + ","+Rs.getString("Consolidado")+")'><img src='../../Iconos/eliminar.png'  /> </A></td>");
+              
+                 }
+      
+                   if (Rs.getString("Tipo_Ciclo").equals("Raciones")){
+                       
+                       Dias_Rac= Dias_Rac+Integer.parseInt(Rs.getString("Dias_Rac"));
+                       Sold_Raci= Sold_Raci+Integer.parseInt(Rs.getString("Sl_Rac"));
+                      
+                  out.println("<tr><td align='center'>"+Rs.getString("Tipo_Ciclo")+ "</td>");
+                  out.println("<td align='center'>"+Rs.getString("Dias_Abas")+"</td>"); 
+                  out.println("<td align='center'>"+Rs.getString("Sl_Abas")+"</td>");
+                  out.println("<td align='center'>"+Rs.getString("Val_Estancia")+ "</td>");
+                  out.println("<td></td><td></td>");
+                  out.println("<td align='center'><A href='javascript:Eliminar_Planilla_Consolidado(" + Rs.getString("Planilla") + ","+Rs.getString("Consolidado")+")'><img src='../../Iconos/eliminar.png'  /> </A></td>");
+
+                 }
+             
+         //Dias_Abast, Sold_Abast,Estancia, Secos, Frescos, Dias_Rac, Sold_Raci
+            }
+                   
+                 out.println("<tr><td>TOTALES ABASTECIMIENTO</td><td><input type='text' style='text-align:right;' id='Dias_Abast' value='"+Dias_Abast+"'  name='Secos' size='10' readonly></td>"
+                         + " <td><input type='text' style='text-align:right;' id='Sold_Abast' value='"+Sold_Abast+"'  name='Secos' size='10' readonly></td>"
+                         + "<td><input type='text' style='text-align:right;' id='Estancia' value='"+Estancia+"'  name='Secos' size='10' readonly></td>"
+                         + "<td><input type='text' style='text-align:right;' id='Secos' value='"+Secos+"'  name='Secos' size='10' readonly></td>"
+                         + "<td><input type='text' style='text-align:right;' id='Frescos' value='"+Frescos+"'  name='Secos' size='10' readonly></td>");  
+               
+                   
+                 out.println("<tr><td>TOTALES RACIONES</td><td><input type='text' style='text-align:right;' id='Dias_Rac' value='"+Dias_Rac+"'  name='Secos' size='10' readonly></td>"
+                         + " <td><input type='text' style='text-align:right;' id='Sold_Raci' value='"+Sold_Raci+"'  name='Secos' size='10' readonly></td>" );
+                       
+               
+            }catch(Exception ex ){ out.println(ex.getMessage());}
+            
+
+
+            out.println("  </table></center>");
+            
+
+        }
+
+
+          
+          
+          if(request.getParameter ("Agregar_Planilla_Consolidado") !=null )
+                {
+             
+                   try{
+                    Consolidado_Planilla_LN Cons_Plan_LN = new Consolidado_Planilla_LN();
+                    Consolidado_Planilla_EN Cons_Plan_EN = new Consolidado_Planilla_EN();
+                    Planilla_LN Plan_LN = new Planilla_LN();
+                    
+                    Integer Cod_Consolidado = Integer.parseInt(request.getParameter ("Cod_Consolidado"));
+                    Integer Id_Planilla = Integer.parseInt(request.getParameter ("Cod_Planilla"));
+                    
+                    Cons_Plan_EN.setConsolidado(Cod_Consolidado);
+                     Cons_Plan_EN.setPlanilla(Id_Planilla);
+                     
+                    if(Cons_Plan_LN.Registrar_Planilla_Consolidado(Cons_Plan_EN))
+                    {
+                        Plan_LN.Actualizar_Estado_Planilla(Id_Planilla,"Consolidado");
+                        
+                        
+                        out.println("Planilla Registrada");
+                        
+                    }
+                    else{    out.println("No se registro");}
+                    
+                    
+                    
+                    
+                    
+                    
+                   }catch(Exception e){}
+                    
+             
+                }
+          
+          
+          
+       
+           
+         if(request.getParameter ("Listar_Planillas_Abastecimmiento_Finalizadas") !=null )
+         {
+                
+                    Planilla_LN Plan_LN = new Planilla_LN();
+                   
+                 Integer Unidad= Integer.parseInt(request.getParameter ("Cod_Unidad"));
+              
+                         try{
+                            ResultSet Res= Plan_LN.Listar_Planillas_Abastecimmiento_Finalizada(Unidad);
+                 
+                            out.println("'<div class='container'><div class='row'><hr><div class='col-md-10 col-md-offset-1'><div class='panel panel-default panel-info'><div class='panel-heading'><h4><center>BANDEJA DE ENTRADA: PLANILLA(S) FINALIZADA(S)</center></h4></div><table class='table table-hover table-bordered table-condensed >'<tr><td><center><STRONG>ID</STRONG></center></td><td><center><STRONG>FECHA</STRONG></center></td><td><center><STRONG>COMPAÑIA</STRONG></center></td><td><center><STRONG>CARGO AL MES</STRONG></center></td><td><center><STRONG>ESTADO</STRONG></center></td><td align='center'><STRONG>AGREGAR</STRONG></td></tr></div></div></div></div></div>");  
+                            
+                            int j=0;
+                           
+                    while(Res.next())
+                                {
+                                    j++;
+                                    out.println("<tr><td>"
+                                    +j+"</td><td align='center'>"+ Res.getString("Fecha_Reg")
+                                 
+                                    +"</td><td align='center'>"+Res.getString("Nomb_Comp")+"</td>"
+                                    +"<td align='center'>"+Res.getString("Mes_Per")+" "+Res.getString("Anio_Per") +"</td>"+"</td>" 
+                                    +"<td align='center'>"+Res.getString("Estado_Plan")+"</td>"+"</td>" 
+                                   
+                                    + "<td align='center'> <A href=\"javascript:Agregar_Planilla_Consolidado('"+Res.getString("Id_Planilla")+"');\"><center><img  src='../../Iconos/mas.png'  width='25' height='25'  /></td> ");
+  
+                               
+                                }
+                         
+                          
+                        out.println("</td></tr></table></center>");  
+                        
+            
+                        }catch(Exception e){out.println("error");  }
+   
+         }
+      
+
+
+
+
+
+
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+        
           
           
           if(request.getParameter ("Buscar_Existencia_Codigo_Consolidado") !=null )
@@ -136,42 +386,6 @@ public class Consolidado extends HttpServlet {
          
                 } 
           
-          
-          
-          
-          
-           if(request.getParameter ("Listar_Planillas_Abastecimmiento_Finalizadas") !=null )
-                { 
-                    Planilla_LN Plan_LN = new Planilla_LN();
-                   
-                    Integer Unidad= Integer.parseInt(request.getParameter ("Cod_Unidad"));
-              
-                         try{
-                            ResultSet Res= Plan_LN.Listar_Planillas_Abastecimmiento_Finalizada(Unidad);
-                            
-     
-                            out.println("'<div class='container'><div class='row'><hr><div class='col-md-10 col-md-offset-1'><div class='panel panel-default panel-info'><div class='panel-heading'><h4><center>BANDEJA DE ENTRADA ABASTECIMIENTOS COMPLETADAS</center></h4></div><table class='table table-hover table-bordered table-condensed >'<tr><td><center><STRONG>ID</STRONG></center></td><td><center><STRONG>FECHA</STRONG></center></td><td><center><STRONG>COMPAÑIA</STRONG></center></td><td><center><STRONG>CARGO AL MES</STRONG></center></td><td><center><STRONG>ESTADO</STRONG></center></td><td align='center'><STRONG>AGREGAR</STRONG></td></tr></div></div></div></div></div>");  
-                            int j=0;
-                    while(Res.next())
-                                {
-                                    j++;
-                                    out.println("<tr><td>"
-                                    +j+"</td><td align='center'>"+ Res.getString("Fecha_Reg")
-                                 
-                                    +"</td><td align='center'>"+Res.getString("Nomb_Comp")+"</td>"
-                                    +"<td align='center'>"+Res.getString("Mes_Per")+" "+Res.getString("Anio_Per") +"</td>"+"</td>" 
-                                    +"<td align='center'>"+Res.getString("Estado_Plan")+"</td>"+"</td>" 
-                                   
-                                    + "<td align='center'> <input type='checkbox' value='"+Res.getString("Id_Planilla")+"' id=\"List_Planillas\" />" + Res.getString("Id_Planilla")+ "</td></tr>");
-  
-                                
-                                }
-            
-                        out.println("</td></tr></table></center>");  
-            
-                        }catch(Exception e){out.println("error");  }
-   
-                }
           
   
         
