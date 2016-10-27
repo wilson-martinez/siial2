@@ -153,18 +153,19 @@
             </form>
           </tbody>
         </table>
-               <div id="Listar_Planillas_Consolidadas"></div>
+              
       </div>
     </div>
    </div>
-       <center> <input type="Button" class="btn btn-primary" id="Btn_Consolidado" Name="Btn_Consolidado" value="CONSOLIDAR PLANILLAS" class="registrar"> </center> 
-  
+      
          
 </div>
-  
    
+            <div id="Lista_Plan_Completadas">   </div>
+   <div id="Listar_Planillas_Consolidadas"></div> 
             
-            
+    <br> <center> <input type="Button" class="btn btn-primary" id="Btn_Consolidado" Name="Btn_Consolidado" value="CONSOLIDAR PLANILLAS" class="registrar"> </center> 
+          
             
    
             
@@ -174,7 +175,7 @@
 
 
                            
-      <div id="Lista_Plan_Completadas">   </div>
+
                       
        
      
@@ -239,8 +240,9 @@
        $(function(){
            
         Listar_Planillas_Consolidadas (); 
-         Buscar_Existencia_Codigo_Consolidado (); 
+         
          Listar_Planillas_Abastecimmiento_Completada();
+         Buscar_Existencia_Codigo_Consolidado (); 
              
             });   
     
@@ -349,24 +351,55 @@
                                  $('#Btn_Generar_Codigo').attr("disabled", false);
                                   alert("PUEDE GENERAR UN NUEVO CODIGO");
                                     }
+                             Listar_Planillas_Consolidadas (); 
    
 			}); 
       
   }  
     
-    
+    // Dias_Abast, Sold_Abast,Estancia, Secos, Frescos, Dias_Rac, Sold_Raci
     
 $(document).ready(function() {
 		$('#Btn_Consolidado').click(function(event) {
 
-              Listar_Planillas_Consolidadas ();
-                      var  Cod_Unidad = $('#Cod_Unidad').val();
-                   
-                      
-                   
-                  
-                 
-	
+          
+             var  Cod_Cons = $('#Cod_Consolidado').val();
+             
+             var  Dias_Abast = $('#Dias_Abast').val();
+             var  Sold_Abast = $('#Sold_Abast').val();
+             var  Estancia = $('#Estancia').val();
+             var  Secos = $('#Secos').val();
+             var  Frescos = $('#Frescos').val();
+             var  Dias_Rac = $('#Dias_Rac').val();
+             var  Sold_Raci = $('#Sold_Raci').val();
+             
+                     
+			$.post('../..//Consolidado', {
+                          Finalizar_Consolidado : "Finalizar_Consolidado",
+                          Cod_Cons : Cod_Cons,
+                          Dias_Abas : Dias_Abast,
+                          Sold_Abas  : Sold_Abast,
+                          Estan  : Estancia,
+                          Sec :  Secos,
+                          Fresc : Frescos,
+                          Dias_Ra : Dias_Rac,
+                          Sold_Rac : Sold_Raci
+			}, function(responseText) {
+                            
+                            Listar_Planillas_Consolidadas (); 
+                            Buscar_Existencia_Codigo_Consolidado (); 
+                         alert(responseText);
+                   // $('#Listar_Planillas_Consolidadas').html(responseText);
+                               
+
+			}); 
+          
+          
+          
+          
+          
+          
+     
 		});
 	});
     
