@@ -99,10 +99,6 @@
                                  </td>
     		</table>     
         
-      
-
-</div>
-        
      
 <%    
       HttpSession sesion=request.getSession(true);
@@ -156,7 +152,7 @@
                 <tr><td> <td><input type="text"  id="Cod_Unidad" value='<% out.println(Unidad);%>'></td></tr>
           <tbody>
             <tr>
-              <td><label>MES</label></td>
+              <td><label>MES:</label></td>
               <td colspan="1" align="center"><div class="col-md-5"></div>
                         <select class="form-control" id="Periodo" required>
                             <option value="">--Seleccionar Un Periodo--</option>
@@ -176,7 +172,7 @@
               </td>
             </tr>
             <tr>
-              <td><label>COMPAÑIAS</label></td>
+              <td><label>COMPAÑÍA:</label></td>
                     <td><select class="form-control" id="Cod_Compania" required>
                         <option value="">--Seleccionar Compañia--</option>
 
@@ -226,45 +222,7 @@
                      
                      </div></center> 
       
-               
-        <table width="102%" border="0" align="left">
-             <tbody>
-                   <!-- LINEA DIVISORIA DEL CUERPO AL PIE DE PAGINA-->
-          
-                   <tr>
-                     <td width="35%"><p>
-                      <%
-                        out.println("<table><tr><td>");
-                        out.println("<tr><td>Usuario: <kbd>"+Log+"</kbd>");
-                        out.println("<tr><td><center>Unidad: <kbd>"+Sigla+"</kbd></center>");
-                        out.println("<tr><td></table>");  
-                        %>                 
-                           </p>
-                     <tr>&nbsp;</tr>
-                     <tr> </tr>
-                       <td width="10%">
-                     <td width="20%"><p>
-                       
-                                </h6>
-                   	 </td>
-                      <td width="44%">
-                          <blockquote class="blockquote-reverse" <td width="15%">
-                            <h6>
-                            EJERCITO NACIONAL DE COLOMBIA<br>
-                            COMANDO DE PERSONAL<br>
-                            SECCION EJECUCION PRESUPUESTAL
-                            BOGOTÁ DC.<br>
-                            Teléfono : 3208594329<br>
-                          </h6
-                          </blockquote>
-                       </td>       	
-                    <td width="1%">
-                   	<td width="17%"><p style="text-align: center">
-                            <img  alt="Cinque Terre" class="img-rounded" width="120" height="120" alt="right"  src="../../Iconos/LA.png" alt=""/>
-            		 </td>
-                  </tr>                
-            </body>
-          </table>                         
+                            
    <script>
 
    $(function(){
@@ -406,15 +364,43 @@ $(document).ready(function()
 </script>
                                    
                            
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
-                           
+ <!-- TABLA PIÃ DE PÃGINA -->
+     	<table width="102%" border="0" align="center">
+             <tbody>
+                   <!-- LÃNEA DIVISORIA DEL CUERPO AL PIÃ DE PÃGNIA-->
+      
+                   <tr>
+                   <td width="20%"><p></p>
+                     <tr>&nbsp;</tr>
+                     <tr>&nbsp;</tr>
+                       <td width="10%">
+                     <td width="20%"><p>
+                     
+                     </td>
+                       
+                      <td width="44%">
+                          <blockquote class="blockquote-reverse" <td width="15%">
+                            <h6>
+                            EJERCITO NACIONAL DE COLOMBIA<br>
+                            COMANDO DE PERSONAL<br>
+                            SECCION EJECUCION PRESUPUESTAL<br>
+                            BOGOTÁ DC.<br>
+                            Teléfono : 3208594329<br>
+                          </h6
+                          </blockquote>
+                       </td>
+                                    	
+                    <td width="1%">
+                   	<td width="17%"><p style="text-align: left">
+            		
+                       <img alt="Cinque Terre" class="img-rounded" width="120" height="120" alt="right" src="../../Iconos/LA.png" alt=""/>
+                        </td>
+                  </tr>
+                <tr>       
+       
+            </body>
+          </table>   
+                      
                            
     </body>
 </html>
