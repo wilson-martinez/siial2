@@ -316,15 +316,16 @@
             
     function Elimina_Planilla_Abastecimiento(id_planilla){
         
-       // alert("sasas");
-         var  id_planilla =id_planilla;
-                     
+       
+         var  id_plan=id_planilla;
+                 
 			$.post('../..//Abastecimiento', {
                           Elimina_Planilla_Abastecimiento : "Elimina_Planilla_Abastecimiento",
-                          id_planilla : id_planilla
+                          id_planilla : id_plan
 			}, function(responseText) {
-                    
-                        // Listar_Planillas_Abastecimmiento_Borrador();
+                           Listar_Planillas_Abastecimmiento_Borrador();
+                          alert(responseText);
+                         
 			});   
   
     }        

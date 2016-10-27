@@ -101,10 +101,10 @@ public class Planilla_AD {
     
     
  
-     public Boolean Actualizar_Estado_Planilla(Integer Cod_Planilla)
+     public Boolean Actualizar_Estado_Planilla(Integer Cod_Planilla, String Estado)
             {
          
-            String Sql=" UPDATE \"Planilla\"  SET \"Estado_Plan\"  ='Finalizado' "
+            String Sql=" UPDATE \"Planilla\"  SET \"Estado_Plan\"  ='"+Estado+"' "
                         + " where \"Id_Planilla\" ='"+Cod_Planilla+"';"; 
                    try{
                      return Con.Ejecutar_Actualizacion(Sql);
@@ -151,6 +151,8 @@ public class Planilla_AD {
        
        
        
+    
+       
        
        
        
@@ -166,15 +168,20 @@ public class Planilla_AD {
                     "inner join \"Compania\" Com on Com.\"Codigo_Comp\" = \"Compania\"\n" +
                     " inner join \"Unidad\" Un on  Un.\"Cod_Unidad\" = Com.\"Unidad\" \n" +
                     "where  ( \"Estado_Plan\"='Borrador' or \"Estado_Plan\"='Completado' ) and \"Tipo_Modalidad\"='1' and  \"Cod_Unidad\" ='"+Cod_Unidad+"' ORDER BY \"Fecha_Reg\",\"Estado_Plan\" ASC;"; 
-            
-        
-        
         try{
                  Res =Con.Ejecutar_Consulta(Sql);
                 }catch( Exception x ) {}
                     return Res;
          }
       
+        
+        
+        
+        
+        
+        
+        
+        
         
         
          public ResultSet Listar_Planillas_Abastecimmiento_Finalizada(Integer Cod_Unidad)
@@ -196,12 +203,11 @@ public class Planilla_AD {
          }
         
         
-                
-        /*
-        
-         */
+      
          
-        
+         
+         
+         
          public ResultSet Listar_Totales_Panillas(Integer Id_Planilla)
             {
                 String Sql=" select \"Id_Planilla\",\"Secos\",\"Frescos\",\"Sl_Abas\",\"Dias_Abas\",\"Val_Estancia\",\"Sl_Rac\",\"Dias_Rac\" \n" +

@@ -72,16 +72,7 @@ public class Configurar_Abastecimiento extends HttpServlet {
           
                     }
        
-     
-        
-        
-        
-        
-        
-        
-        
-        
-        
+             
         
         
     }
@@ -344,6 +335,9 @@ public class Configurar_Abastecimiento extends HttpServlet {
           if(request.getParameter ("Lista_Ciclos_registrado") !=null )
               {
                   
+                  
+                  
+                  
                  out.println("<center><table border='1' class='table table-bordered table-hover'>"); 
                  out.println("<tr>");
                  out.println("<td>");
@@ -371,12 +365,12 @@ public class Configurar_Abastecimiento extends HttpServlet {
                                             out.println("<tr><td>"+i+"<td align='center'>"+Cicl.getTipo_Ciclo()+"</td><td align='center'>"+ Cicl.getNumb_Dias() +"</td><td aling='center'>"+Cicl.getFech_Inicio()+"</td><td align='center'> "+Cicl.getFech_Fin()+"</td><td align='center'><A href='javascript:Eliminar_Ciclo_Planilla("+Cicl.getId_Ciclo()+")'><img src='../../Iconos/eliminar.png'  /> </A></td></tr>" );
                                           
                                                                                                                                                                                                                                         
-                                        }
-                
-             
-                                
-               out.println("  </table></center>");
-                             
+                                        }     
+                                out.println("  </table></center>");
+                       
+               
+               
+               
                   
               }    
               

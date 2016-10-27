@@ -113,6 +113,7 @@
                 String Nomb_Unidad=(String)sesion.getAttribute("Nomb_Unidad");
                 String Unidad=(String)sesion.getAttribute("Unidad");
                 String Log= (String)sesion.getAttribute("Log");
+                 
                 
                 
                 if(Log.isEmpty()){

@@ -27,7 +27,13 @@ public class Planilla_LN {
                   return Plan_AD.Generar_Codigo_Comida_Caliente(Cod_Unidad);
             }
    
-   
+    
+      
+            
+     
+     
+     
+     
    //Generer Planilla
   public Boolean Crear_Planilla_Abastecimiento(  Planilla_EN Pla_EN ){
     return Plan_AD.Crear_Planilla_Abastecimiento(Pla_EN);
@@ -99,9 +105,9 @@ public class Planilla_LN {
            
           
           
-     public Boolean Actualizar_Estado_Planilla(Integer Cod_Planilla)
+     public Boolean Actualizar_Estado_Planilla(Integer Cod_Planilla,String Estado)
             {
-               return Plan_AD.Actualizar_Estado_Planilla(Cod_Planilla); 
+               return Plan_AD.Actualizar_Estado_Planilla(Cod_Planilla,Estado); 
             }
           
        

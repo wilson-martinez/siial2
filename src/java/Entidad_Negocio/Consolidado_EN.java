@@ -10,67 +10,76 @@ import java.util.Date;
 /**
 CREATE TABLE "Consolidado"
 (
-  "Id_Consolidado" serial NOT NULL,
-  "fecha_Cons" date,
+  Id_Consolidado" serial NOT NULL,
+  "Fecha_Cons" date,
   "Unidad" bigint,
-  "Cant_Sold" integer,
-  "Cant_Dias" integer,
+  "Sold_Abast" integer,
+  "Dias_Abast" integer,
   "Val_Estancia" numeric(10,2),
-  "Val_Total" numeric(10,2),
-  "Val_Racion" numeric(10,2),
+  "Val_Secos" numeric(10,2),
+  "Val_Frescos" numeric(10,2),
+  "Estado_Cons" character varying(20),
+  "Dias_Ras" integer,
+  "Sold_Rac" integer,
  */
 public class Consolidado_EN {
     
    public  Integer Id_Consolidado;
-   public  String  fecha_Cons;
+   public  String  Fecha_Cons;
    public  Long Unidad;
-   public  Integer Cant_Sold;
-   public  Integer Cant_Dias;
+   public  Integer Sold_Abast;
+   public  Integer Dias_Abast;
    public  Number Val_Estancia;
-   public  Number Val_Total;
-   public  Number Val_Racion;
+   public  Number Val_Secos;
+   public  Number Val_Frescos;
    public  String  Estado_Cons;
-
-    public void setEstado_Cons(String Estado_Cons) {
-        this.Estado_Cons = Estado_Cons;
-    }
-
-    public String getEstado_Cons() {
-        return Estado_Cons;
-    }
+   public  Integer Dias_Ras;
+   public  Integer Sold_Rac;
    
-   
+  
 
     public void setId_Consolidado(Integer Id_Consolidado) {
         this.Id_Consolidado = Id_Consolidado;
     }
 
-    public void setFecha_Cons(String fecha_Cons) {
-        this.fecha_Cons = fecha_Cons;
+    public void setFecha_Cons(String Fecha_Cons) {
+        this.Fecha_Cons = Fecha_Cons;
     }
 
     public void setUnidad(Long Unidad) {
         this.Unidad = Unidad;
     }
 
-    public void setCant_Sold(Integer Cant_Sold) {
-        this.Cant_Sold = Cant_Sold;
+    public void setSold_Abast(Integer Sold_Abast) {
+        this.Sold_Abast = Sold_Abast;
     }
 
-    public void setCant_Dias(Integer Cant_Dias) {
-        this.Cant_Dias = Cant_Dias;
+    public void setDias_Abast(Integer Dias_Abast) {
+        this.Dias_Abast = Dias_Abast;
     }
 
     public void setVal_Estancia(Number Val_Estancia) {
         this.Val_Estancia = Val_Estancia;
     }
 
-    public void setVal_Total(Number Val_Total) {
-        this.Val_Total = Val_Total;
+    public void setVal_Secos(Number Val_Secos) {
+        this.Val_Secos = Val_Secos;
     }
 
-    public void setVal_Racion(Number Val_Racion) {
-        this.Val_Racion = Val_Racion;
+    public void setVal_Frescos(Number Val_Frescos) {
+        this.Val_Frescos = Val_Frescos;
+    }
+
+    public void setEstado_Cons(String Estado_Cons) {
+        this.Estado_Cons = Estado_Cons;
+    }
+
+    public void setDias_Ras(Integer Dias_Ras) {
+        this.Dias_Ras = Dias_Ras;
+    }
+
+    public void setSold_Rac(Integer Sold_Rac) {
+        this.Sold_Rac = Sold_Rac;
     }
 
     public Integer getId_Consolidado() {
@@ -78,36 +87,49 @@ public class Consolidado_EN {
     }
 
     public String getFecha_Cons() {
-        return fecha_Cons;
+        return Fecha_Cons;
     }
 
     public Long getUnidad() {
         return Unidad;
     }
 
-    public Integer getCant_Sold() {
-        return Cant_Sold;
+    public Integer getSold_Abast() {
+        return Sold_Abast;
     }
 
-    public Integer getCant_Dias() {
-        return Cant_Dias;
+    public Integer getDias_Abast() {
+        return Dias_Abast;
     }
 
     public Number getVal_Estancia() {
         return Val_Estancia;
     }
 
-    public Number getVal_Total() {
-        return Val_Total;
+    public Number getVal_Secos() {
+        return Val_Secos;
     }
 
-    public Number getVal_Racion() {
-        return Val_Racion;
+    public Number getVal_Frescos() {
+        return Val_Frescos;
+    }
+
+    public String getEstado_Cons() {
+        return Estado_Cons;
+    }
+
+    public Integer getDias_Ras() {
+        return Dias_Ras;
+    }
+
+    public Integer getSold_Rac() {
+        return Sold_Rac;
     }
 
     public Consolidado_EN() {
     }
 
+    
  
     
     

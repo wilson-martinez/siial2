@@ -130,7 +130,7 @@ public class Abastecimiento extends HttpServlet {
                  Integer id_planilla= Integer.parseInt(request.getParameter ("Id_Planilla"));
        
                 
-                 if (Plan_LN.Actualizar_Estado_Planilla(id_planilla)){
+                 if (Plan_LN.Actualizar_Estado_Planilla(id_planilla,"Finalizado")){
                      out.println("PLANILLA COMPLETADA");
                  }
                  else{out.println("NO SE HA COMPLETADO LA PLANILLA");}
@@ -141,9 +141,8 @@ public class Abastecimiento extends HttpServlet {
          if(request.getParameter ("Elimina_Planilla_Abastecimiento") !=null )
             
              {
-                  out.println("SDDSADSD");
-                 
-               /*  
+               
+               
                  
                   Integer id_planilla= Integer.parseInt(request.getParameter ("id_planilla"));
        
@@ -155,7 +154,7 @@ public class Abastecimiento extends HttpServlet {
                   }else{
                    out.println("LA PLANILLA NO SE  ELIMINO");
                   }
-                  */
+                 
             
              }
         

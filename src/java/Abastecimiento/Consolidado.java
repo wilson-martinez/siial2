@@ -87,16 +87,39 @@ public class Consolidado extends HttpServlet {
             if (request.getParameter("Finalizar_Consolidado") != null)
                 {
 
+                    
+                    /*
+                       Cod_Cons : Cod_Cons,
+                          Dias_Abas : Dias_Abast,
+                          Sold_Abas  : Sold_Abast,
+                          Estan  : Estancia,
+                          Sec :  Secos,
+                          Fresc : Frescos,
+                          Dias_Ra : Dias_Rac,
+                          Sold_Rac : Sold_Raci
+        
+                    */
+                    
                    
                    Consolidado_LN Cons_LN = new Consolidado_LN();
+                   Consolidado_EN Cons_EN= new Consolidado_EN();
                    
-                     Integer Cod_Consolidado = Integer.parseInt(request.getParameter ("Cod_Consolidado"));
+                   Cons_EN.setId_Consolidado( Integer.parseInt(request.getParameter ("Cod_Cons")) );
+                   Cons_EN.setDias_Abast(Integer.parseInt(request.getParameter ("Dias_Abas")));
+                   Cons_EN.setSold_Abast(Integer.parseInt(request.getParameter ("Sold_Abas")));
+                   Cons_EN.setVal_Estancia(Float.parseFloat(request.getParameter ("Estan")));
+                   Cons_EN.setVal_Secos(Float.parseFloat(request.getParameter ("Sec")));
+                   Cons_EN.setVal_Frescos(Float.parseFloat(request.getParameter ("Fresc")));
+                   Cons_EN.setDias_Ras(Integer.parseInt(request.getParameter ("Dias_Ra")));
+                   Cons_EN.setSold_Rac(Integer.parseInt(request.getParameter ("Sold_Rac")));
+                   
+                    
                     
            
-                    if(Cons_LN.Finalizar_Consolidados(Cod_Consolidado))
+                    if(Cons_LN.Finalizar_Consolidados(Cons_EN))
                     
                     {
-                     out.println("CONSOLIDADO Nº. :"+Cod_Consolidado+" FINALIZADO" );
+                     out.println("CONSOLIDADO Nº. :"+Cons_EN.getId_Consolidado()+" FINALIZADO" );
                     
                     }
                     else{out.println("NO SE FINALIZO EL CONSOLIDADO" );}
@@ -141,13 +164,13 @@ public class Consolidado extends HttpServlet {
              Consolidado_Planilla_LN Cons_Plan_LN = new Consolidado_Planilla_LN();
              
         
-                out.println("<center><table border='1' class='table table-bordered table-hover'>"); 
+                out.println("<center><table border='0'>"); 
                
                 out.println("<tbody>");
                 out.println("<tr width=\'250\'>");
                 out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>MODALIDAD</b></td>");
                 out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>DIAS</b></td>");
-                         out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>SL</b></td>"); 
+                out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>SL</b></td>"); 
                 out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>ESTANCIA</b></td>");
                 out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>SECOS</b></td>");
                 out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>FRESCOS</b></td>");
@@ -205,7 +228,7 @@ public class Consolidado extends HttpServlet {
          //Dias_Abast, Sold_Abast,Estancia, Secos, Frescos, Dias_Rac, Sold_Raci
             }
                    
-                 out.println("<tr><td>TOTALES ABASTECIMIENTO</td><td><input type='text' style='text-align:right;' id='Dias_Abast' value='"+Dias_Abast+"'  name='Secos' size='10' readonly></td>"
+                 out.println("<tr><td>TOTALES ABASTECIMIENTO</td><td><input type='text' style='text-align:center;' id='Dias_Abast' value='"+Dias_Abast+"'  name='Secos' size='10' readonly></td>"
                          + " <td><input type='text' style='text-align:right;' id='Sold_Abast' value='"+Sold_Abast+"'  name='Secos' size='10' readonly></td>"
                          + "<td><input type='text' style='text-align:right;' id='Estancia' value='"+Estancia+"'  name='Secos' size='10' readonly></td>"
                          + "<td><input type='text' style='text-align:right;' id='Secos' value='"+Secos+"'  name='Secos' size='10' readonly></td>"
@@ -227,6 +250,15 @@ public class Consolidado extends HttpServlet {
 
 
           
+         
+         
+         
+         
+         
+         
+         
+         
+         
           
           if(request.getParameter ("Agregar_Planilla_Consolidado") !=null )
                 {
@@ -264,85 +296,40 @@ public class Consolidado extends HttpServlet {
           
           
           
-       
-           
-         if(request.getParameter ("Listar_Planillas_Abastecimmiento_Finalizadas") !=null )
-         {
-                
-                    Planilla_LN Plan_LN = new Planilla_LN();
-                   
-                 Integer Unidad= Integer.parseInt(request.getParameter ("Cod_Unidad"));
-              
-                         try{
-                            ResultSet Res= Plan_LN.Listar_Planillas_Abastecimmiento_Finalizada(Unidad);
-                 
-                            out.println("'<div class='container'><div class='row'><hr><div class='col-md-10 col-md-offset-1'><div class='panel panel-default panel-info'><div class='panel-heading'><h4><center>BANDEJA DE ENTRADA: PLANILLA(S) FINALIZADA(S)</center></h4></div><table class='table table-hover table-bordered table-condensed >'<tr><td><center><STRONG>ID</STRONG></center></td><td><center><STRONG>FECHA</STRONG></center></td><td><center><STRONG>COMPAÑIA</STRONG></center></td><td><center><STRONG>CARGO AL MES</STRONG></center></td><td><center><STRONG>ESTADO</STRONG></center></td><td align='center'><STRONG>AGREGAR</STRONG></td></tr></div></div></div></div></div>");  
-                            
-                            int j=0;
-                           
-                    while(Res.next())
-                                {
-                                    j++;
-                                    out.println("<tr><td>"
-                                    +j+"</td><td align='center'>"+ Res.getString("Fecha_Reg")
-                                 
-                                    +"</td><td align='center'>"+Res.getString("Nomb_Comp")+"</td>"
-                                    +"<td align='center'>"+Res.getString("Mes_Per")+" "+Res.getString("Anio_Per") +"</td>"+"</td>" 
-                                    +"<td align='center'>"+Res.getString("Estado_Plan")+"</td>"+"</td>" 
-                                   
-                                    + "<td align='center'> <A href=\"javascript:Agregar_Planilla_Consolidado('"+Res.getString("Id_Planilla")+"');\"><center><img  src='../../Iconos/mas.png'  width='25' height='25'  /></td> ");
-  
-                               
-                                }
-                         
-                          
-                        out.println("</td></tr></table></center>");  
-                        
-            
-                        }catch(Exception e){out.println("error");  }
-   
-         }
+               if (request.getParameter("Listar_Planillas_Abastecimmiento_Finalizadas") != null) {
+
+            Planilla_LN Plan_LN = new Planilla_LN();
+
+            Integer Unidad = Integer.parseInt(request.getParameter("Cod_Unidad"));
+
+            try {
+                ResultSet Res = Plan_LN.Listar_Planillas_Abastecimmiento_Finalizada(Unidad);
+
+                out.println("'<div class='container'><div class='row'><hr><div class='col-md-10 col-md-offset-1'><div class='panel panel-default panel-info'><div class='panel-heading'><h4><center>BANDEJA DE ENTRADA: PLANILLA(S) FINALIZADA(S)</center></h4></div><table class='table table-hover table-bordered table-condensed >'<tr><td><center><STRONG>ID</STRONG></center></td><td><center><STRONG>FECHA</STRONG></center></td><td><center><STRONG>COMPAÑIA</STRONG></center></td><td><center><STRONG>CARGO AL MES</STRONG></center></td><td><center><STRONG>ESTADO</STRONG></center></td><td align='center'><STRONG>AGREGAR</STRONG></td></tr></div></div></div></div></div>");
+
+                int j = 0;
+
+                while (Res.next()) {
+                    j++;
+                    out.println("<tr><td>"
+                            + j + "</td><td align='center'>" + Res.getString("Fecha_Reg")
+                            + "</td><td align='center'>" + Res.getString("Nomb_Comp") + "</td>"
+                            + "<td align='center'>" + Res.getString("Mes_Per") + " " + Res.getString("Anio_Per") + "</td>" + "</td>"
+                            + "<td align='center'>" + Res.getString("Estado_Plan") + "</td>" + "</td>"
+                            + "<td align='center'> <A href=\"javascript:Agregar_Planilla_Consolidado('" + Res.getString("Id_Planilla") + "');\"><center><img  src='../../Iconos/mas.png'  width='25' height='25'  /></td> ");
+
+                }
+
+                out.println("</td></tr></table></center>");
+
+            } catch (Exception e) {
+                out.println("error");
+            }
+
+        }
+
+
       
-
-
-
-
-
-
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-        
-          
           
           if(request.getParameter ("Buscar_Existencia_Codigo_Consolidado") !=null )
                 {   

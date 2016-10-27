@@ -285,9 +285,11 @@ $(document).ready(function() {
                 var Dias_Rac=  $('#Dias_Rac').val();
                 var   Estado_Planill = "Borrador";
                 var Saldo =  $('#Saldo').val();
-            // alert(Saldo);
-
-              
+                var Total_Planilla_Art =$('#Total_Planilla_Art').val();
+             
+         if( parseFloat(Secos) > parseFloat(Total_Planilla_Art) ){
+                    
+                           
               var Secos_Ajustado= Secos - Faltante;
               var Frescos_Ajustado = parseFloat(Frescos) + parseFloat(Faltante);
  
@@ -309,13 +311,18 @@ $(document).ready(function() {
                             $( "#Ventana_Realilzar_Ajuste" ).dialog( "close" );
                                 alert(responseText);
                             $(location).attr('href',"Abastecimiento.jsp"); 
-                       
-                    
-                            
-                             
-                          
+              
                            
 			});
+                        
+                        }else {
+                            
+                            alert("EL TOTAL DE LOS VIVERES SECOS SUPERA EL 60% DE LO PERMITIDO")
+                            
+                        } 
+                        
+                        
+                        
 		});
 	});  
     

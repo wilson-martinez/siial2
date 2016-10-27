@@ -31,7 +31,10 @@ public class Consolidado_LN {
     
     
     
-    
+     public Boolean Finalizar_Consolidados(Consolidado_EN Cons_EN)
+            {
+                return  Cons_AD.Finalizar_Consolidados(Cons_EN);
+            }
     
     
     public ResultSet Listar_Consolidados_Avtivos(Integer Cod_Undad)

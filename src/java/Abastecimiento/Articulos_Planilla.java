@@ -187,7 +187,7 @@ public class Articulos_Planilla extends HttpServlet {
                                                                      
                                                            Valor= Float.parseFloat(Res3.getString("Valor"));
                                                             VT= Float.parseFloat(Res3.getString("VT"));
-                                                            out.println("<tr><td align='center' width='5%'>"+j+"</td><td>"+Res3.getString("Nomb_Art")+"<TD align='center'>"+Res3.getString("Un_Med")+"</TD><TD align='center'>"+Res3.getString("Cantidad")+"</TD><TD align='center'>"+  formatter.format(Valor)+"</TD><td align='right'>"+ formatter.format(VT)+"</td><td>   <A href=\"javascript:Eliminar_Articulo_Planilla('"+Res3.getString("IdPlanArt")+"');\"><center><img  src='../../Iconos/eliminar.png'  /></center> </A>");
+                                                            out.println("<tr><td align='center' width='5%'>"+j+"</td><td>"+Res3.getString("Nomb_Art")+"<TD align='center'>"+Res3.getString("Un_Med")+"</TD><TD align='center'>"+Res3.getString("Cantidad")+"</TD><TD align='center'>"+  formatter.format(Valor)+"</TD><td align='right'>"+ formatter.format(VT)+"</td><td>   <A href=\"javascript:Eliminar_Articulo_Planilla('"+Res3.getString("IdPlanArt")+"');\"><center><img  src='../../Iconos/eliminar.png'  /> </center> </A>");
                                                            Valor_Tot=   Valor_Tot+ Float.parseFloat(Res3.getString("VT"));
                                                            
                                                              
@@ -355,7 +355,9 @@ public class Articulos_Planilla extends HttpServlet {
                if(Saldo<=Valor_Minimo_Art )
                 {
                    if(Plan_LN.Realizar_Ajuste_Planilla(Plan_EN)){
-                        out.println("AJUSTE REALIZADO CON EXITO");
+                      out.println("AJUSTE REALIZADO CON EXITO");
+                        
+                       // response.sendRedirect("Abastecimiento.jsp");
                        
                     }
                 }
