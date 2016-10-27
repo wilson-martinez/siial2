@@ -167,7 +167,7 @@ public class Planilla_AD {
                     "inner join \"Periodo\" on  \"Id_Periodo\"   =\"Periodo\"\n" +
                     "inner join \"Compania\" Com on Com.\"Codigo_Comp\" = \"Compania\"\n" +
                     " inner join \"Unidad\" Un on  Un.\"Cod_Unidad\" = Com.\"Unidad\" \n" +
-                    "where  ( \"Estado_Plan\"='Borrador' or \"Estado_Plan\"='Completado' ) and \"Tipo_Modalidad\"='1' and  \"Cod_Unidad\" ='"+Cod_Unidad+"' ORDER BY \"Fecha_Reg\",\"Estado_Plan\" ASC;"; 
+                    "where  ( \"Estado_Plan\"='Borrador' or \"Estado_Plan\"='Ajustado' ) and \"Tipo_Modalidad\"='1' and  \"Cod_Unidad\" ='"+Cod_Unidad+"' ORDER BY \"Fecha_Reg\",\"Estado_Plan\" ASC;"; 
         try{
                  Res =Con.Ejecutar_Consulta(Sql);
                 }catch( Exception x ) {}

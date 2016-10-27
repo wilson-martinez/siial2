@@ -6,7 +6,6 @@
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-
 <html lang="us">
 <head>
 	<meta charset="utf-8">
@@ -19,7 +18,7 @@
 	<style>
 	body{
 		font-family: "Arial", verdana;
-		margin: 50px;
+		margin: 0px;
 	}
 	.demoHeaders {
 		margin-top: 2em;
@@ -58,10 +57,37 @@
 	select {
 		width: 200px;
 	}
-	</style>
+	
+        div::after,
+        .clearfix::after,
+        .crear::after{
+	clear: both;
+	visibility: hidden;
+	content:"";
+	display: block;
+        }
+        *{
+	margin: 0px;
+	padding: 0px;
+        }
+
+        div#header{
+        width:100%;
+        height:180px;
+        }
+        .footer{
+	background-color: #fff;
+	width: 100%;
+	height: 150px;
+	bottom: 0;
+	position: fixed;
+	text-align: center;
+	color: #000;
+        }
+        </style>
 </head>
 <body>
-
+    <div id="header">
     <table class="table table-condensed">
           		<td width="6%" height="112" style="text-align: left">
                             <img src="../../Iconos/LE.png" width="66" height="65" alt=""/>
@@ -80,7 +106,7 @@
                                      </p>
                                  </td>
     </table>
-          
+   </div>
          	 
 <h5 class="demoHeaders">
 <%
@@ -108,7 +134,7 @@
     
                //out.println("<table><tr><td>");
                //out.println("<tr><td>Usuario : "+Log);
-               out.println("<center><b><font size='5' face='arial' color='black'>MODALIDADES "+Sigla+"</font></center>");
+               out.println("<center><b><font size='5' face='arial' color='black'>MODALIDADES "+Sigla+"</font></center><br>");
                //out.println("</table>");  
     }catch(Exception e){}
     
@@ -141,48 +167,7 @@
         <li><div><a href="../COMIDA_CALIENTE/Comida_Caliente.jsp"><h4>COMIDA CALIENTE</h4></div></li>
         <li><div><h4>PLAN DE MEJORAS</h4></div></li>
 </ul></div>
-    
- 
-</Center>
-
-
-
-
-<table width="102%" border="0" align="center">
-                  
-                   <td width="20%"><p></p>
-                     <tr>&nbsp;</tr>
-                     <tr>&nbsp;</tr>
-                       <td width="10%">
-                     <td width="20%"><p>
-                     
-                     </td>
-                       
-                      <td width="44%">
-                          
-                          <blockquote class="blockquote-reverse" <td width="15%">
-                              <h6>
-                            EJERCITO NACIONAL DE COLOMBIA<br>
-                            COMANDO DE PERSONAL<br>
-                            SECCION EJECUCION PRESUPUESTAL<br>
-                            BOGOTÁ DC.<br>
-                            Teléfono : 3208594329<br>
-                              </h6>
-                          </blockquote>
-                       </td>
-                                    	
-                    <td width="1%">
-                   	<td width="17%"><p style="text-align: left">
-                        <img alt="Cinque Terre" class="img-rounded" width="120" height="120" alt="right" src="../../Iconos/LA.png" alt=""/>
-                        </td>
-                  </tr>
-                <tr>       
-       
-            
-          </table>  
-
-</body>
-
+  
 
 <script src="../../JS/jquery/external/jquery/jquery.js"></script>
 <script src="../../JS/jquery/jquery-ui.js"></script>
@@ -213,10 +198,44 @@ $( "#dialog-link, #icons li" ).hover(
 </script>
 
 
+</Center>
 
 
-
-
+<div class="footer">
+     	<table width="102%" border="0" align="center">
+             
+                   <!-- LÃNEA DIVISORIA DEL CUERPO AL PIÃ DE PÃGNIA-->
+      
+                   <tr>
+                   <td width="20%"><p></p>
+                     <tr>&nbsp;</tr>
+                     <tr>&nbsp;</tr>
+                       <td width="10%">
+                     <td width="20%"><p>
+                     
+                     </td>
+                       
+                      <td width="44%">
+                          <blockquote class="blockquote-reverse" <td width="15%">
+                            <h6>
+                            EJERCITO NACIONAL DE COLOMBIA<br>
+                            COMANDO DE PERSONAL<br>
+                            SECCION EJECUCION PRESUPUESTAL<br>
+                            BOGOTÁ DC.<br>
+                            Teléfono : 3208594329<br>
+                          </h6
+                          </blockquote>
+                       </td>
+                                    	
+                    <td width="1%">
+                   	<td width="17%"><p style="text-align: left">
+                            <img alt="Cinque Terre" class="img-rounded" width="120" height="120" alt="right" src="../../Iconos/LA.png" alt=""/>
+                       </td>
+                  </tr>
+                <tr>       
+      
+          </table>   
+</div>
 
 </body>
 </html>

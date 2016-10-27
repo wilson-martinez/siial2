@@ -117,9 +117,6 @@
 %>
 
 
-
-
-
         <center><div id="Lista_Consolidado_Plani" style="width:750px">
         </div></center>  
 
@@ -150,7 +147,7 @@
                                     }catch(Exception e){out.println("error");}
                                 %>
             </select>
-                    </td><td><input type="Number" id="Cantidad" name="Cantidad" style="width : 100px; heigth : 100px" ></td>
+                    </td><td><input type="Number" id="Cantidad" name="Cantidad" style="width : 100px; heigth : 100px" min="1"  ></td>
                     <td><input type="Number" id="Saldo" name="Faltante" size='3' style="width : 100px; heigth : 100px" readonly></td>
                         
                        
@@ -186,12 +183,16 @@
 
 
 <center>  <tr>  <tr>  <td colspan='2' align='center'>
-    <legend style="font-weight:bold; color:#61380B;">
-  
-       <br> <button id="Bton_Ajustar" class="ui-button ui-corner-all ui-widget">
-		<span class="ui-icon ui-icon-newwin"></span>REGISTRAR
+    <legend style="font-weight:bold; color:#61380B;"> <br> 
+   <a href="Configurar_Abastecimiento.jsp" class="btn btn-default btn-lg" role="button">ATRAS</a>
+      <button id="Bton_Ajustar" class="ui-button ui-corner-all ui-widget">
+		<span class="ui-icon ui-icon-newwin"></span>AJUSTAR
 	</button>
-     </legend></td>
+        
+     </legend>
+      
+     
+</td>
                     </td ></tr></center>
 
              
@@ -208,9 +209,7 @@
                 
 </div>         
              
-  
-<center><div>  <a href="Configurar_Abastecimiento.jsp" class="btn btn-default" role="button">ATRAS</a>
-</div> </center>        
+      
              
 <script>
 
@@ -257,6 +256,26 @@
 
 //Boton hacer Ajustes a la Planilla
 
+//
+
+$(document).ready(function() {
+		$('#Cantidad').blur(function() {
+
+            var Cant=   $('#Cantidad').val();
+            
+            
+            if( parseInt(Cant)<0){
+                
+                $('#Btn_Guardar_Articulo').attr("disabled", true);
+                alert("LA CANTIDAD NO PUEDE SER NEGATIVA");
+            }
+            else{$('#Btn_Guardar_Articulo').attr("disabled", false);}
+	                
+		});
+	});
+        
+        
+
 $(document).ready(function() {
 		$('#Bton_Ajustar').click(function(event) {
 
@@ -283,7 +302,7 @@ $(document).ready(function() {
                 var Val_Estancia=  $('#Val_Estancia').val();
                 var Sl_Rac=  $('#Sl_Rac').val();
                 var Dias_Rac=  $('#Dias_Rac').val();
-                var   Estado_Planill = "Borrador";
+                var   Estado_Planill = "Ajustado";
                 var Saldo =  $('#Saldo').val();
                 var Total_Planilla_Art =$('#Total_Planilla_Art').val();
              

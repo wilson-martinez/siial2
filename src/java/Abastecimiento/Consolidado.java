@@ -164,19 +164,19 @@ public class Consolidado extends HttpServlet {
              Consolidado_Planilla_LN Cons_Plan_LN = new Consolidado_Planilla_LN();
              
         
-                out.println("<center><table border='0'>"); 
+                out.println("<center><table class='table table-bordered'>"); 
                
                 out.println("<tbody>");
                 out.println("<tr width=\'250\'>");
-                out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>MODALIDAD</b></td>");
-                out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>DIAS</b></td>");
-                out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>SL</b></td>"); 
-                out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>ESTANCIA</b></td>");
-                out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>SECOS</b></td>");
-                out.println("<td align=\'center\' bgcolor='#F2F2F2'><b>FRESCOS</b></td>");
+                out.println("<td align=\'center\'><b>MODALIDAD</b></td>");
+                out.println("<td align=\'center\'><b>DIAS</b></td>");
+                out.println("<td align=\'center\'><b>SL</b></td>"); 
+                out.println("<td align=\'center\'><b>ESTANCIA</b></td>");
+                out.println("<td align=\'center\'><b>SECOS</b></td>");
+                out.println("<td align=\'center\'><b>FRESCOS</b></td>");
         
                
-                out.println("<td align='center' bgcolor='#F2F2F2'><b>Eliminar</b></td> ");    
+                out.println("<td align='center'><b>Eliminar</b></td> ");    
                 Integer Dias_Abast=0;
                 Integer Dias_Rac=0;
                 Integer Sold_Abast=0;
@@ -228,15 +228,15 @@ public class Consolidado extends HttpServlet {
          //Dias_Abast, Sold_Abast,Estancia, Secos, Frescos, Dias_Rac, Sold_Raci
             }
                    
-                 out.println("<tr><td>TOTALES ABASTECIMIENTO</td><td><input type='text' style='text-align:center;' id='Dias_Abast' value='"+Dias_Abast+"'  name='Secos' size='10' readonly></td>"
-                         + " <td><input type='text' style='text-align:right;' id='Sold_Abast' value='"+Sold_Abast+"'  name='Secos' size='10' readonly></td>"
-                         + "<td><input type='text' style='text-align:right;' id='Estancia' value='"+Estancia+"'  name='Secos' size='10' readonly></td>"
+                 out.println("<tr><td><b>TOTAL ABASTECIMIENTO</td><td><input type='text' style='text-align:center;' id='Dias_Abast' value='"+Dias_Abast+"'  name='Secos' size='10' readonly></td>"
+                         + " <td><input type='text' style='text-align:center;' id='Sold_Abast' value='"+Sold_Abast+"'  name='Secos' size='10' readonly></td>"
+                         + "<td><input type='text' style='text-align:center;' id='Estancia' value='"+Estancia+"'  name='Secos' size='10' readonly></td>"
                          + "<td><input type='text' style='text-align:right;' id='Secos' value='"+Secos+"'  name='Secos' size='10' readonly></td>"
                          + "<td><input type='text' style='text-align:right;' id='Frescos' value='"+Frescos+"'  name='Secos' size='10' readonly></td>");  
                
                    
-                 out.println("<tr><td>TOTALES RACIONES</td><td><input type='text' style='text-align:right;' id='Dias_Rac' value='"+Dias_Rac+"'  name='Secos' size='10' readonly></td>"
-                         + " <td><input type='text' style='text-align:right;' id='Sold_Raci' value='"+Sold_Raci+"'  name='Secos' size='10' readonly></td>" );
+                 out.println("<tr><td><b>TOTAL RACIONES</td><td><input type='text' style='text-align:center;' id='Dias_Rac' value='"+Dias_Rac+"'  name='Secos' size='10' readonly></td>"
+                         + " <td><input type='text' style='text-align:center;' id='Sold_Raci' value='"+Sold_Raci+"'  name='Secos' size='10' readonly></td>" );
                        
                
             }catch(Exception ex ){ out.println(ex.getMessage());}

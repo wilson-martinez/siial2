@@ -109,7 +109,7 @@ public class Abastecimiento extends HttpServlet {
         else{   out.println("NO SE REGISTRO LA PLANILA"); }
                 }catch(Exception e){
              
-        out.println("NO SE REGISTRO LA PLANILA SELECCIINES LOS DATOS :"+e.getMessage());
+        out.println("NO SE REGISTRÓ LA PLANILLA, SELECCIONE MES Y COMPAÑÍA."/*+e.getMessage()*/);
          
          }
          
@@ -229,14 +229,28 @@ public class Abastecimiento extends HttpServlet {
                                     +"<td align='center'>"+Res.getString("Mes_Per")+" "+Res.getString("Anio_Per") +"</td>"+"</td>"); 
                                      
                                    
-                                      out.println("<td align='center'><A href='Abastecimiento.jsp?Cod_Plan="+Res.getString("Id_Planilla")+"'\" class=\"btn btn-default\" role=\"button\" >Modificar</A></td>");
                                       
-                                      out.println("<td align='center'><A href=\"javascript:Finalizar_Planilla_Abastecimiento('"+Res.getString("Id_Planilla")+"');\" class=\"btn btn-default\" role=\"button\" >Finalizar</A></td>");
+                                   
+                                      
+                                     if(Res.getString("Estado_Plan").equals("Ajustado"))
+                                     {
+                                       //  <A href='Abastecimiento.jsp?Cod_Plan="+Res.getString("Id_Planilla")+"'\" class=\"btn btn-default\" role=\"button\" >Ajustado</A>
+                                         
+                                       out.println("<td align='center'>Ajustado</td>");
+                                        out.println("<td align='center'><A href=\"javascript:Finalizar_Planilla_Abastecimiento('"+Res.getString("Id_Planilla")+"');\" class=\"btn btn-default\" role=\"button\" >Finalizar</A></td>");
                                        
-                                    
-                                 
-                                    out.println("<td align='center'><A href=\"javascript:Elimina_Planilla_Abastecimiento('"+Res.getString("Id_Planilla")+"');\"><img src='../../Iconos/eliminar.png'/> </A></td></tr>");
+                                     
+                                     }
+                                    if(Res.getString("Estado_Plan").equals("Borrador"))
+                                     {
+                                         out.println("<td align='center'><A href='Abastecimiento.jsp?Cod_Plan="+Res.getString("Id_Planilla")+"'\" class=\"btn btn-default\" role=\"button\" >Modificar</A></td><td></td>");
+                                      
+                                     }
+                                      
+                                   out.println("<td align='center'><A href=\"javascript:Elimina_Planilla_Abastecimiento('"+Res.getString("Id_Planilla")+"');\"><img src='../../Iconos/eliminar.png'/> </A></td></tr>");
                              
+                                 
+                                    
                                 }
             
                         out.println("</td></tr></table></center>");  

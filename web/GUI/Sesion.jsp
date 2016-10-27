@@ -19,10 +19,10 @@
 	<style>
 	body{
 		font-family: "Trebuchet MS", sans-serif;
-		margin: 50px;
+		margin: 0px;
 	}
 	.demoHeaders {
-		margin-top: 2em;
+		margin-top: 5em;
 	}
 	#dialog-link {
 		padding: .4em 1em .4em 20px;
@@ -58,32 +58,52 @@
 	select {
 		width: 200px;
 	}
-	</style>
+	
+        div::after,
+        .clearfix::after,
+        .crear::after{
+	clear: both;
+	visibility: hidden;
+	content:"";
+	display: block;
+        }
+        *{
+	margin: 0px;
+	padding: 0px;
+        }
+
+        .footer{
+	background-color: #fff;
+	width: 100%;
+	height: 150px;
+	bottom: 0;
+	position: fixed;
+	text-align: center;
+	color: #000;
+        }
+        </style>
         
-        <table>
-          		<td width="6%" height="112" style="text-align: left">
-                            <img src="../Iconos/LE.png" width="66" height="65" alt=""/>
-                        </td>
-                        <td width="83%">
+</head>
+<body>
+
+<center>
+        <table class="table table-condensed">
+          		<tr>
+    	    		<td width="6%" height="112" style="text-align: left"><img src="../Iconos/LE.png" width="66" height="65" alt=""/></td>
+    	   			<td width="83%">
              			<h6><strong>MINISTERIO DE DEFENSA NACIONAL<br>
    	            		 FUERZAS MILITARES DE COLOMBIA<br>
    	            		 EJÃRCITO NACIONAL <br>
    	            		 COMANDO DE PERSONAL<br>
               			 SECCION EJECUCION PRESUPUESTAL</strong></h6>
             		</td>
-           			 <td width="9%">
-                                     <p style="text-align: left">
-                                        <img class="img-rounded" alt="Cinque Terre" src="../Iconos/COPER.jpg" width="60" height="79" alt="right"/>
-                                     </p>
-                                 </td>
-    </table>
-</head>
-<body>
-
-    
+           			 <td width="9%"><p style="text-align: left">
+            		 <img class="img-rounded" alt="Cinque Terre" src="../Iconos/COPER.jpg" width="60" height="79" alt="right" /></p>
+            		 </td>
+    		</table>    
           
          	 
-<h4 class="demoHeaders"></h4>
+<h4 class="demoHeaders"></h4>  
 <%
     double Total_Fresco_40=0;
     double Total_Secos_60=0;
@@ -108,7 +128,7 @@
     
                //out.println("<table><tr><td>");
                //out.println("<tr><td>Usuario : "+Log);
-               out.println("<center><b><font size='5' face='arial' color='black'>MENÚ PRINCIPAL "+Sigla+"</font></center>");
+               out.println("<center><b><font size='5' face='arial' color='black'>MENÚ PRINCIPAL "+Sigla+"</font></center><br>");
                //out.println("</table>");  
     }catch(Exception e){}
     
@@ -136,47 +156,6 @@
     
     
 </Center>
-
-
-
-<table width="102%" border="0" align="center">
-             <tbody>
-                   <!-- LÃNEA DIVISORIA DEL CUERPO AL PIÃ DE PÃGNIA-->
-      
-                   <tr>
-                   <td width="20%"><p></p>
-                     <tr>&nbsp;</tr>
-                     <tr>&nbsp;</tr>
-                       <td width="10%">
-                     <td width="20%"><p>
-                     
-                     </td>
-                       
-                      <td width="44%">
-                          <blockquote class="blockquote-reverse" <td width="15%">
-                            <h6>
-                            EJERCITO NACIONAL DE COLOMBIA<br>
-                            COMANDO DE PERSONAL<br>
-                            SECCION EJECUCION PRESUPUESTAL<br>
-                            BOGOTÁ DC.<br>
-                            Teléfono : 3208594329<br>
-                          </h6
-                          </blockquote>
-                       </td>
-                                    	
-                    <td width="1%">
-                   	<td width="17%"><p style="text-align: left">
-                        <img alt="Cinque Terre" class="img-rounded" width="120" height="120" alt="right" src="../Iconos/LA.png" alt=""/>
-                        </td>
-                  </tr>
-                <tr>       
-       
-            </body>
-          </table>  
-
-
-
-
 
 
 <script src="../JS/jquery/external/jquery/jquery.js"></script>
@@ -209,8 +188,45 @@ $( "#dialog-link, #icons li" ).hover(
 
 
 
-
-
+<!-- TABLA PIÃ DE PÃGINA -->
+<div class="footer">
+     	<table width="102%" border="0" align="center">
+             <tbody>
+                   <!-- LÃNEA DIVISORIA DEL CUERPO AL PIÃ DE PÃGNIA-->
+      
+                   <tr>
+                   <td width="20%"><p></p>
+                     <tr>&nbsp;</tr>
+                     <tr>&nbsp;</tr>
+                       <td width="10%">
+                     <td width="20%"><p>
+                     
+                     </td>
+                       
+                      <td width="44%">
+                          <blockquote class="blockquote-reverse" <td width="15%">
+                            <h6>
+                            EJERCITO NACIONAL DE COLOMBIA<br>
+                            COMANDO DE PERSONAL<br>
+                            SECCION EJECUCION PRESUPUESTAL<br>
+                            BOGOTÁ DC.<br>
+                            Teléfono : 3208594329<br>
+                          </h6
+                          </blockquote>
+                       </td>
+                                    	
+                    <td width="1%">
+                   	<td width="17%"><p style="text-align: left">
+            		
+                       <img alt="Cinque Terre" class="img-rounded" width="120" height="120" alt="right"   src="../Iconos/LA.png" alt=""/>
+                            
+                        </td>
+                  </tr>
+                <tr>       
+       
+            </body>
+          </table>   
+</div>
 
 
 </body>

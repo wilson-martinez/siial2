@@ -74,16 +74,14 @@
 	}
 	</style>
         
-        
-         
-        
-        </head>
+</head>
+
+
     <body>
         
         <title>Registro de Abastecimiento</title>
-        <table class="table table-condensed">
-          		<tr>
-    	    		<td width="6%" height="112" style="text-align: left"><img src="../../Iconos/LE.png" width="66" height="65" alt=""/></td>
+        <table>
+          		<td width="6%" height="112" style="text-align: left"><img src="../../Iconos/LE.png" width="66" height="65" alt=""/></td>
                     
                         <td width="83%">
              			<h6><strong>MINISTERIO DE DEFENSA NACIONAL<br>
@@ -128,7 +126,6 @@
 
 <div class="container">
   <div class="row" aling="center">
-    <hr>
     <div class="col-md-4 col-md-offset-4">
       <div class="panel panel-default panel-info"> 
         <!-- Default panel contents -->
@@ -142,7 +139,7 @@
            <tr><td> <td><input type="text"  id="Cod_Unidad" value='<% out.println(Unidad);%>'></td></tr>
             <tr><td colspan='5' align='center'>
                     <input type="text" id="Cod_Consolidado"  name="Cod_Consolidado" size='7' readonly >    
-          <input type="Button" class="btn btn-primary" id="Btn_Generar_Codigo" Name="Btn_Generar_Codigo" value="GENERAR CODIGO" class="registrar">
+          <input type="Button" class="btn btn-primary" id="Btn_Generar_Codigo" Name="Btn_Generar_Codigo" value="RESERVAR CONSECUTIVO" class="registrar">
            </td 
             </tr>
             <tr>
@@ -163,27 +160,34 @@
 </div>
    
             <div id="Lista_Plan_Completadas">   </div>
-   <div id="Listar_Planillas_Consolidadas"></div> 
-            
-    <br> <center> <input type="Button" class="btn btn-primary" id="Btn_Consolidado" Name="Btn_Consolidado" value="CONSOLIDAR PLANILLAS" class="registrar"> </center> 
-          
-            
+             <hr>
    
-            
-
-       
-<br> 
-
-
-                           
-
-                      
-       
+<div class="container">
+  <div class="row" aling="center">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="panel panel-default panel-info"> 
+        <!-- Default panel contents -->
+        <div class="panel-heading">
+            <h4><center>CONSOLIDADO</center></h4>
+        </div>
+        <!-- Table -->
+        <table class="table table-bordered">
+          <tbody>
      
-        </div>         
+           <tr><td><div id="Listar_Planillas_Consolidadas"></div></td>
+           </tr>     
+             </tbody> 
+             </table>
+           </div> </div> </div> </div>
+             
+             
+    <br> <center> <input type="Button" class="btn btn-primary" id="Btn_Consolidado" Name="Btn_Consolidado" value="CONSOLIDAR PLANILLAS" class="registrar"> </center> 
+   
+    <br> 
+ </div>         
                
         <table width="102%" border="0" align="left">
-             <tbody>
+       
                    <!-- LINEA DIVISORIA DEL CUERPO AL PIE DE PAGINA-->
           
                    <tr>
@@ -210,7 +214,7 @@
                             COMANDO DE PERSONAL<br>
                             SECCION EJECUCION PRESUPUESTAL
                             BOGOTÁ DC.<br>
-                            Teléfono : 320___________<br>
+                            Teléfono : 3208594329<br>
                           </h6
                           </blockquote>
                        </td>
@@ -224,15 +228,9 @@
                   </tr>
                 <tr>       
        
-            </body>
+         
           </table> 
           
-                           
-                   
-                           
-                        
-                 
-    </body>
     
    <script> 
     
