@@ -150,6 +150,7 @@
         
         <!-- Table -->
         <form action="Abastecimiento.jsp" method="post"><table class="table"    >
+
                 <tr><td> <td><input type="text"  id="Cod_Unidad" value='<% out.println(Unidad);%>'></td></tr>
           <tbody>
             <tr>
