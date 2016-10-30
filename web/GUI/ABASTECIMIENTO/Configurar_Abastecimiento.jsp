@@ -77,7 +77,11 @@
 		width: 400px;
 	}
 	
-  
+        div#header{
+        width:920%;
+        height:180px;
+        }
+        
         </style>
   
        
@@ -85,22 +89,25 @@
 </head>
 <body>
 
-     <table  >
+    <div class="header">
+     <table>
           		<tr>
     	    		
                         <td width="6%" height="112" style="text-align: left"><img src="../../Iconos/LE.png" width="66" height="65" alt=""/></td>
-                        <td width="83%">
+                        <td>
              			<h6><strong>MINISTERIO DE DEFENSA NACIONAL<br>
    	            		 FUERZAS MILITARES DE COLOMBIA<br>
    	            		 EJÃRCITO NACIONAL <br>
    	            		 COMANDO DE PERSONAL<br>
               			 SECCION EJECUCION PRESUPUESTAL</strong></h6>
             		</td>
-           			 <td width="9%"><p style="text-align: left">
-            		
-                                     <img src="../../Iconos/COPER.jpg" alt="Cinque Terre" src="Iconos/COPER.jpg" width="60" height="79" alt="right" /></p>
-                                 </td>
+                        <td width="74%"></td>
+                        <td align="left">
+                                <img class="img-rounded" src="../../Iconos/COPER.jpg" alt="Cinque Terre" src="Iconos/COPER.jpg" width="60" height="79" alt="right" /></p>
+                        </td>
+                       
     		</table>   
+    </div>
     
 <%
     double Total_Fresco_40=0;
@@ -199,7 +206,7 @@
             </TABLE>  
             
          
-             <center> <table style="width:920px;"> 
+             <center> <table> 
 
                          <tr><td> 
                                 <Div id="Lista_Solados_Planilla"  >  </Div>
@@ -234,16 +241,17 @@
                                         <!-- CICLO DEVOLUCIÓN -->
                            <div class="table table-bordered table-hover">
                                    <table class="table table-bordered" align="center">
-                                       <caption class=""><h4><center><b>CICLO DE ABASTECIMIENTOS</b></center></h4></caption>
+                                       <caption class=""><h4><center><b>CICLO DE ABASTECIMIENTOS</b></center><br></h4></caption>
                                         <thead border="1">
                                                             <tr>
-                                                                <th ><center>MODALIDAD: </center></th>
-                                                                <th colspan="3"><select class="form-control" Id="Tipo_Ciclo" required>   
-                                                                        <option value="Abastecimiento">Abastecimiento</option>
+                                                                <td><center><b>MODALIDAD:</b></center></td>
+                                                                <td><select class="form-control" Id="Tipo_Ciclo" required>   
+                                                                         <option value="Abastecimiento">Abastecimiento</option>
                                                                          <option value="Raciones">Raciones de Capaña</option>
                                                                          </select>
-                                                                </th>
+                                                                </td>
                                                             </tr>
+                                                            <th colspan="4"><p>&nbsp;</p></th>
                                                <tr>
                                                     <td><center><b>Mes</b></center></td>
                                                    <td><center><b>Fecha Inicio </b></center></td>  
@@ -290,20 +298,9 @@
                                                
             </div>
                                                     
-                                               
-                                                    
-                                                    
+                     
 
-
-
-
-
-
- 
-                    
-                        
-
-<table width="102%" border="0" align="center">
+<table width="100%" border="0" align="center">
              <tbody>
                 
                    <tr>
@@ -315,7 +312,7 @@
                      
                      </td>
                        
-                      <td width="44%">
+                      <td width="90%">
                           <blockquote class="blockquote-reverse" <td width="15%">
                             <h6>
                             EJERCITO NACIONAL DE COLOMBIA<br>
@@ -328,7 +325,7 @@
                        </td>
                                     	
                     <td width="1%">
-                   	<td width="17%"><p style="text-align: left">
+                   	<td width="17%"><p style="text-align: right">
             		
                       <img alt="Cinque Terre" class="img-rounded" width="120" height="120" alt="right"   src="../../Iconos/LA.png" alt=""/>
                         </td>
@@ -337,8 +334,7 @@
         </table> 
 
  <DIV id="Confirmacion_Guardado_Soldado"></DIV>   
-
-            
+          
    <script>
        
  
@@ -438,10 +434,10 @@ $(function(){
                         Iden_Sold : Iden_Sold
                         }, function(responseText) 
                             {
-                            alert(responseText) ;
+                            //alert(responseText) ;
                                 Lista_Solados_Planilla();
                                 Lista_Solados_Activos();
-                            // $('#Lista_Solados_Planilla').html(responseText);
+                           
                                 });   
        
        
@@ -490,14 +486,13 @@ function Confirmacion_Guardado_Soldado(ident_Sold){
                        
                         }, function(responseText) 
                             {
-                                alert(responseText);
+                              //  alert(responseText);
                               
                                 Lista_Solados_Planilla();
                                 Lista_Solados_Activos();
                                  
                                  $( "#Confirmacion_Guardado_Soldado" ).dialog( "close" );
-                               // Lista_Ciclos_registrado();
-                            //$('#Lista_Solados_Activos').html(responseText);
+                        
              
                                 });    
    
@@ -647,7 +642,8 @@ $(document).ready(function()
                             {
                                 Cargar_Select_Ciclo();
                                  Lista_Ciclos_registrado();
-                                 $( "#Form_Ciclos" ).dialog( "close" );
+                               $( "#Form_Ciclos" ).dialog( "close" );
+                               alert(responseText);
                         //alert(responseText);
                          // $('#Lista_Planillas_Devolucion').html(responseText);
                             });       
@@ -747,8 +743,6 @@ $(document).ready(function()
 
 </script>
          
-            
-            
-          
+        
 </body>
 </html>
