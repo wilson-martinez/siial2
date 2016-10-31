@@ -289,15 +289,17 @@ public class Planilla_AD {
      
         public ResultSet Buscar_Existencia_Modalidad_Soldado_Periodo(String Ident_Sold,String Id_Ciclo)
         {
-           
-        String Sql=" select Pl.\"Id_Planilla\",\"Apellidos\",\"Nombres\",\"Grado\",\"Fech_Inicio\",\"Fech_Fin\",\"Numb_Dias\",\"Tipo_Ciclo\" from \"Planilla\" Pl\n" +
-                   " inner join \"Ciclo\" Ci on  Ci.\"Planilla\"=  Pl.\"Id_Planilla\"\n" +
-                   " inner join \"Planilla_Soldado\" PS on PS.\"Ciclo\"= CI.\"Id_Ciclo\"\n" +
-                   " Inner join \"Soldado\" Sol on Sol.\"Ident_Sold\" = PS.\"Soldado\"\n" +
-                   " where ( \"Fech_Inicio\" >=(select \"Fech_Inicio\" from \"Ciclo\" where \"Id_Ciclo\" ='"+Id_Ciclo+"') AND  \"Fech_Fin\" <=(select \"Fech_Fin\" from \"Ciclo\" where \"Id_Ciclo\" ='"+Id_Ciclo+"')    ) \n" +
-                   " and  \"Soldado\" ='"+Ident_Sold+"' AND CI.\"Id_Ciclo\" <> '"+Id_Ciclo+"' "; 
-            
-        
+     
+            String Sql = " select Pl.\"Id_Planilla\",\"Apellidos\",\"Nombres\",\"Grado\",\"Fech_Inicio\",\"Fech_Fin\",\"Numb_Dias\",\"Tipo_Ciclo\" from \"Planilla\" Pl\n"
+                    + " inner join \"Ciclo\" Ci on  Ci.\"Planilla\"=  Pl.\"Id_Planilla\"\n"
+                    + " inner join \"Planilla_Soldado\" PS on PS.\"Ciclo\"= CI.\"Id_Ciclo\"\n"
+                    + " Inner join \"Soldado\" Sol on Sol.\"Ident_Sold\" = PS.\"Soldado\"\n"
+                    + " where (\"Soldado\" ='"+Ident_Sold+"'  and \"Fech_Inicio\"   between (select \"Fech_Inicio\" from \"Ciclo\" where \"Id_Ciclo\" ='"+Id_Ciclo+"' ) \n"
+                    + " and  (select \"Fech_Fin\" from \"Ciclo\" where \"Id_Ciclo\" ='"+Id_Ciclo+"' )  )\n"
+                    + " or (\"Soldado\" ='"+Ident_Sold+"'    and  \"Fech_Fin\" between (select \"Fech_Inicio\" from \"Ciclo\" where \"Id_Ciclo\" ='"+Id_Ciclo+"' ) \n"
+                    + " and  (select \"Fech_Fin\" from \"Ciclo\" where \"Id_Ciclo\" ='"+Id_Ciclo+"') )  ";
+
+     
         
         try{
                  Res =Con.Ejecutar_Consulta(Sql);
