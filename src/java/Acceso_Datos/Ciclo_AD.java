@@ -36,7 +36,7 @@ public class Ciclo_AD {
     public Boolean Registrar_Ciclo(Ciclo_EN Cicl_EN )
     {
 
-    String SqlInst ="INSERT INTO  \"Ciclo\" (\"Fech_Inicio\",\"Fech_Fin\",\"Numb_Dias\",\"Tipo_Ciclo\",\"Planilla\") VALUES ";
+    String SqlInst ="INSERT INTO  Ciclo (Fech_Inicio,Fech_Fin,Numb_Dias,Tipo_Ciclo,Planilla) VALUES ";
     SqlInst =SqlInst+ " ('"+Cicl_EN.getFech_Inicio()+"','"+Cicl_EN.getFech_Fin()+"','"+Cicl_EN.getNumb_Dias()+"','"+Cicl_EN.getTipo_Ciclo()+"','"+Cicl_EN.getPlanilla()+"')";
 
     try{
@@ -51,8 +51,8 @@ public class Ciclo_AD {
    public ResultSet Listar_Ciclos_Planilla(Integer Cod_Plan)
         {
            
-            String Sql="Select \"Id_Ciclo\",\"Fech_Inicio\",\"Fech_Fin\",\"Numb_Dias\",\"Tipo_Ciclo\"  "
-                       + " from \"Ciclo\" Where \"Planilla\"  ="+Cod_Plan+"  order by  \"Numb_Dias\" desc;"; 
+            String Sql="Select Id_Ciclo,Fech_Inicio,Fech_Fin,Numb_Dias,Tipo_Ciclo  "
+                       + " from Ciclo Where Planilla  ="+Cod_Plan+"  order by  Fech_Inicio asc;"; 
             System.out.println(Sql);
         try{
                 Res =Con.Ejecutar_Consulta(Sql);
@@ -67,14 +67,31 @@ public class Ciclo_AD {
      public Boolean Elimminar_Ciclo(Integer  Id_Ciclo )
                 {
     
-                        String SqlInst =" delete  from \"Ciclo\" where \"Id_Ciclo\"='"+Id_Ciclo+"'";
+                        String SqlInst =" delete  from Ciclo where Id_Ciclo='"+Id_Ciclo+"'";
                     try{
                             return Con.Ejecutar_Actualizacion(SqlInst);
                         }catch( Exception x ) { return false;}     
                 }  
    
    
+     
+ public ResultSet Buscar_Existencia_Ciclos_Planilla(String Fech_Inicio,String Fech_Fin,Integer Cod_Plan)
+        {
+           
+String Sql=" SELECT  * from Ciclo WHERE  Planilla='"+Cod_Plan+"' AND (('"+Fech_Inicio+"' BETWEEN Fech_Inicio AND\n" +
+"Fech_Fin) OR ('"+Fech_Fin+"' BETWEEN Fech_Inicio AND Fech_Fin)) ; ";
+            
+        
+            
+            
+                    
+                    
+        try{
+                Res =Con.Ejecutar_Consulta(Sql);
+            }catch( Exception x ) {}
+                return Res;
    
+            } 
    
    
    
