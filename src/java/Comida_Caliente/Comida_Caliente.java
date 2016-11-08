@@ -5,8 +5,7 @@
  */
 package Comida_Caliente;
 
-import Entidad_Negocio.Ciclo_EN;
-import Entidad_Negocio.Estancia_EN;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -14,12 +13,16 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import Logica_Negocio.Planilla_LN;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+
 import Entidad_Negocio.Planilla_EN;
-import Logica_Negocio.Ciclo_LN;
-import Logica_Negocio.Estancia_LN;
+import Entidad_Negocio.Soldado_EN;
+import Logica_Negocio.Comedor_LN;
+import Logica_Negocio.Planilla_Soldado_LN;
+import Logica_Negocio.Soldado_LN;
+import com.google.gson.Gson;
+import java.sql.ResultSet;
+
+
 
 /**
  *
@@ -57,6 +60,29 @@ public class Comida_Caliente extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+       // response.setContentType("application/json;charset=UTF-8");
+         response.setContentType("text/html;charset=UTF-8");
+        PrintWriter out = response.getWriter();
+        
+           if(request.getParameter ("Listar_Comedores_Centralizadora") !=null )
+              {
+                    Comedor_LN Comed_LN=  new Comedor_LN();
+                   
+                     Integer Id_Centraliz= Integer.parseInt(request.getParameter ("Id_Centraliz"));
+                   
+                    
+                         Gson gson= new Gson();
+                          PrintWriter pw=response.getWriter();
+                          pw.println(gson.toJson( Comed_LN.Listar_Comedores_Centralizadora(Id_Centraliz) ));
+                          pw.close();  
+                  
+                  
+                  
+              }
+        
+        
+        
+        
     }
 
     /**
@@ -81,56 +107,147 @@ public class Comida_Caliente extends HttpServlet {
           
           
           
-          if(request.getParameter ("Buscar_Existencia_Activa_Comida_Caliente") !=null )
-                { 
-                    
-                    out.println("Existencia activa");
-                } 
           
           
-          
-        if(request.getParameter ("Crear_Planilla_Comida_Caliente") !=null )
-                {  
+          if(request.getParameter ("Lista_Solados_Planilla") !=null )
+              {
                   
-                    Date fechaActual = new Date();
-                    DateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy");
+                              
+          out.println("<table  class='table table-bordered' style='font-family:Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif' align='top' bgcolor='#F4F4F4'>");
+          out.println("<thead><td colspan='7' align='center'><b>LISTA DE SOLDADOS ASIGNADOS A LA PLANILLA</b></td>");
+          out.println("</thead>");
+          out.println("<tr>");
+          out.println("<td align='center'><b>Nº</b></td>");
+          out.println("<td align='center'><b>Grado</b></td>");
+          out.println("<td align='center'><b>Apellidos Nombres</b></td>");
+          out.println("<td align='center'><b>Identificación</b></td>");
+          out.println("<td align='center'><b>#.Dias</b>");
+          out.println("<td align='center'><b>Fecha Inicio</b></td>");
+        
+          out.println("</tr>");
+           out.println("<tr>");
+                          
+
+          try{   
+         Integer Cod_Planilla= Integer.parseInt(request.getParameter ("Cod_Planilla"));
+              
+              
+           Planilla_Soldado_LN  Plan_Sold_LN= new Planilla_Soldado_LN();
+            ResultSet Res3= Plan_Sold_LN.Listar_Soldados_Planilla(Cod_Planilla);
+            int j=0;
+            while(Res3.next()){
+            j++;
+            out.println("<tr><td align='center'>"+j+"</td>"
+                    + "<td align='center'>"+Res3.getString("Grado")+"</td>"
+                    + "<td align='center'>"+Res3.getString("Apellidos")+" "+Res3.getString("Nombres")+"</td>"
+                    + "<td align='center'>"+Res3.getString("Ident_Sold")+"</td>"
+                    + "<td align='center'>"+Res3.getString("Numb_Dias")+"</td>"
+                    + "<td align='center'>"+Res3.getString("Fech_Inicio")+"</td> <td align='center'>"
+                          
+                        + "<A href=\"javascript:Retirar_Soldado_Planilla('"+Res3.getString("Id_Ciclo")+"','"+Res3.getString("Ident_Sold")+"');\"><img src='../../Iconos/eliminar.png'/> </A>");
+                                              
+            }
+          }catch(Exception e){}
+
+                out.println("</tr>"); 
+                out.println("</table>");
+         
+              }
+          
+          
+          
+          
+          if(request.getParameter ("Btn_Finalizar_Plan_Cte") !=null )
+              {
+                  
+                Integer Cod_Plan= Integer.parseInt(request.getParameter ("Cod_Planilla"));
+                  
+                   Planilla_LN Plan_LN= new  Planilla_LN();
+              if( Plan_LN.Actualizar_Estado_Planilla(Cod_Plan,"Finalizado"))
+              {
+                 out.println("PLANILLA FINALIZADA");
+                }else{out.println("NO SE FINALIZO LA PLANILLA");}
+        
+                  
+                  
+              }
+            
+                  
+                  
+                  
+          
+ if(request.getParameter ("Retirar_Soldado") !=null )
+              {
+            
+               
+        
+              Planilla_Soldado_LN  Plan_Sold_LN= new Planilla_Soldado_LN();
+              if(Plan_Sold_LN.Desvincular_Soldados_Planilla(Integer.parseInt(request.getParameter ("ident_Soldado")),Integer.parseInt(request.getParameter ("Ciclo")) ))
+                {
+                 out.println("SOLDADO RETIRADO DE  LA PLANILLA");
+                }else{out.println("NO SE RETIRO EL SOLDADO DE LA PLANILLA");}
+        
+              
+              
+              
+              }
+
+          
+          
+          
+                   
+          
+          
+          
+          
+           if(request.getParameter ("Agregar_Soldado_Plan") !=null )
+                        {
+
+                            try{
+                            Planilla_Soldado_LN Plan_Sold_LN= new Planilla_Soldado_LN();
+                            Integer  ident_Sold= Integer.parseInt(request.getParameter("ident_Soldado").toString());
+                            Integer  Ciclo= Integer.parseInt(request.getParameter("Ciclo").toString());
+                            Integer  comedor= Integer.parseInt(request.getParameter("comedor").toString());
+                            
+                           if(Plan_Sold_LN.Registrar_Soldados__Comedor_Planilla(ident_Sold,Ciclo,comedor))
+                                {
+                                  out.println("SOLDADO ASIGNADO A LA PLANILLA");
+                                }
+                           else{ out.println("NO SE ASIGNO SOLDADO A LA PLANILLA");}
+                            }catch(Exception e){ out.println("SELECCIONE UN CICLO");}
+   
+                          
+                    }
+          
+          
+          
+          
+          
+          
+          
+          
+        if(request.getParameter ("Btn_Crear_Plan_Cte") !=null )
+                {  
+                 
                     Planilla_LN Plan_LN = new Planilla_LN();
                     Planilla_EN Plan_EN = new Planilla_EN(); 
-                    Estancia_LN Est_LN = new Estancia_LN();
-                    
-                    Ciclo_EN Cic_EN = new Ciclo_EN();
-                    Ciclo_LN Cic_LN = new Ciclo_LN(); 
+  
                     try{
-                    Integer Cod_plan= Integer.parseInt(Plan_LN.Crear_Codigos_Planillas(4));
-                     Plan_EN.setCod_Planilla(Cod_plan);
-                    Plan_EN.setTipo_Modalidad(4);
+                   
                     Plan_EN.setEstado_Plan("Borrador");
-                    Plan_EN.setEstancia(Est_LN.Listar_Estancia_Activa().getId_Estancia());
+                    Plan_EN.setFecha_Reg(request.getParameter("fecha_Planilla"));
                     Plan_EN.setUnidad(Integer.parseInt(request.getParameter("Cod_Unidad")));
-                    Plan_EN.setFecha_Reg(formatoFecha.format(fechaActual).toString());
-                    Plan_EN.setPeriodo(2);
-                    
-                     if(Plan_LN.Crear_Planilla_Devolucion(Plan_EN))
-                        {
-                       
-                        Cic_EN.setPlanilla(Cod_plan);
-                        Cic_EN.setFech_Inicio(Plan_EN.getFecha_Reg());
-                        Cic_EN.setFech_Fin(Plan_EN.getFecha_Reg());
-                        Cic_EN.setTipo_Ciclo("Comida_Caliente");
-                        Cic_EN.setNumb_Dias(1);
-                          if(Cic_LN.Regisrtar_Cilco(Cic_EN)){
-                              out.println("PLANILLA CREADA CON EXITO");
-                          }
-                          else{out.println("NO SE CREO EL CICLO");}
-   
-                            
-                            
-                            
-                          //  out.println("PLANILLA REGISTRADA CON EXIO");
-                        }else{out.println("NO SE REGISTRO LA PLANILLA");}
-                    
-                    
-                    
+                    Integer Id_Centralizador=  Integer.parseInt(request.getParameter("Id_Centraliz"));
+                    Plan_EN.setPeriodo(Integer.parseInt(request.getParameter("Periodo")));
+
+                     String RespBd[]=Plan_LN.Crear_Planilla_Comida_Caliente(Plan_EN,Id_Centralizador );
+     
+                        if( Integer.parseInt(RespBd[1])==1)
+                            {
+                                out.println(RespBd[4]+"&"+RespBd[5]+"&"+RespBd[6]+"&"+RespBd[7] );
+                            }else{out.println("NO SE REGISTRO LA PLANILLA :" + RespBd[4]);
+                                }
+ 
                     }
                    catch(Exception e){}
                     
@@ -138,6 +255,55 @@ public class Comida_Caliente extends HttpServlet {
                    
                 }
                    
+        
+                if (request.getParameter("Lista_Solados_Activos") != null) {
+
+            out.println("<br><br><table class='table table-bordered' style='font-family:Gotham, 'Helvetica Neue', Helvetica, Arial, sans-serif' align='top' bgcolor='#F4F4F4'>");
+
+            out.println("<tr>");
+            out.println("<td colspan='4'><center> <b>LISTA DE SOLDADOS DE LA UNIDAD</b> </td>  </tr>");
+            out.println("<tr>");
+
+            out.println("<td align='center'><b>Nº</b></td>");
+            out.println("<td><center><b>Grado</b></center></td>");
+            out.println("<td><center><b>Apellidos Nombres</b></center></td>");
+            out.println("<td><center><b>Identificación</b></center></td> ");
+            out.println(" <td><center><b>[_]</b></center></td>");
+            out.println("</tr>");
+            out.println("</thead>");
+            out.println("<tbody>");
+            out.println("<tr>");
+
+            // Cod_Unidad : Cod_Unidad,
+            //        id_planilla : id_planilla,
+            try {
+                Soldado_EN Sold_EN = new Soldado_EN();
+                Soldado_LN Sold_LN = new Soldado_LN();
+                ResultSet Res3 = Sold_LN.Listar_Soldados_Unidad(Long.parseLong(request.getParameter("Cod_Unidad")), Integer.parseInt(request.getParameter("id_planilla")));
+                int j = 0;
+                while (Res3.next()) {
+                    j++;
+                    out.println("<tr><td>" + j + "</td><td>" + Res3.getString("Grado") + "</td><td>" + Res3.getString("Apellidos") + " " + Res3.getString("Nombres") + "<td>" + Res3.getString("Ident_Sold") + "<td>"
+                            + "<A href=\"javascript:Agregar_Soldado_Planilla('" + Res3.getString("Ident_Sold") + "');\"><img src='../../Iconos/mas.png' width='25' height='25'  /> </A>"
+                            + "</td> ");
+                }
+            } catch (Exception e) {
+            }
+
+            out.println("</tr>");
+            out.println("</tbody>");
+            out.println("</table>");
+
+        }
+
+
+        
+        
+        
+        
+        
+        
+        
         
         
     }
