@@ -108,9 +108,7 @@
                 String Unidad="";
                 String Log= "";
                 String Sigla="";
-                
-    
-    
+     
     try{
                  Ident=(String)sesion.getAttribute("Ident");
                  Tipo_User=(String)sesion.getAttribute("Tipo_Usu");
@@ -190,8 +188,19 @@
                        
 
                              %>
-                        </select>   
-                    </td>
+                             
+                   </td> </tr>
+                        <tr><td>REGIONAL</td>  <td>
+                                <select id="Regionales" style="width 200"   >
+                                </select> 
+                     <tr>  
+                    </td><td>CAD</td> <td>  
+                                <select id="cads" style="width 200" >
+                                </select>
+                    </td> <tr>
+                    
+                    
+                    
             </tr>
             <tr>
               <td colspan='2' align='center'>
@@ -230,8 +239,66 @@
    $(function(){
                        
          Listar_Planillas_Abastecimmiento_Borrador(); 
+         Listar_Regional();
                      
             });   
+     
+function Listar_Regional() {
+    
+
+			$.post('../..//Abastecimiento', {
+                          Listar_Regionales : "Listar_Regional"
+  			}, function(responseText) {
+                            
+                            alert(responseText);
+                            $('#Regionales').html(responseText);
+			});    
+                      
+                        
+                        
+            }
+
+function Listar_Cad(cod_regional) {
+
+                var cod_reg= cod_regional;
+
+                
+			$.post('../..//Abastecimiento', {
+                          cod_Regional: cod_reg,
+                          Listar_Cad : "Listar_Cad"
+			}, function(responseText) {
+                            $('#Articulos').html("");
+                            
+                            $('#cads').html(responseText);
+			});    
+                        
+                     
+ 
+ }   
+    
+            
+   $(document).ready(function () {
+    $('#Regionales').change(function (event) {
+
+        var Cod_Reg=  $('#Regionales').val();
+        Listar_Cad(Cod_Reg);
+
+    });
+});
+    
+
+
+   
+$(document).ready(function () {
+    $('#cads').change(function (event) {
+      var cod_cad=  $('#cads').val();
+   Listar_Articulos_Cad(cod_cad)
+      
+      
+    });
+});           
+            
+            
             
             
       function Finalizar_Planilla_Abastecimiento(Id_Planilla){
@@ -336,6 +403,8 @@ $(document).ready(function()
 
                 $('#Btn_Crear_Planilla').click(function(event)
                                 {  
+                                    
+                                   
                            var Cod_Compania = $( "#Cod_Compania" ).val() ;
                            var Periodo = $( "#Periodo" ).val() ;
               
@@ -352,15 +421,14 @@ $(document).ready(function()
                           
                             });    
                             
+                            
+                            
                                    
                                 });
                 
                    
                 });
-             
-                
-    
- 
+
 
 
 </script>
@@ -403,6 +471,7 @@ $(document).ready(function()
             </body>
           </table>   
                       
-                           
+ 
     </body>
+   
 </html>
