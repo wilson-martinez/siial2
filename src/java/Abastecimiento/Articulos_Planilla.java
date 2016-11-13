@@ -13,6 +13,8 @@ import Logica_Negocio.Planilla_LN;
 import Entidad_Negocio.Planilla_EN;
 import Logica_Negocio.Planilla_Articulo_LN;
 import Logica_Negocio.Articulo_LN;
+import Logica_Negocio.Regional_LN;
+import Logica_Negocio.Cad_LN;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.ResultSet;
@@ -87,16 +89,31 @@ public class Articulos_Planilla extends HttpServlet {
           PrintWriter out = response.getWriter();
         
            
-                       //\"Nomb_Art\",\"Un_Med\",\"Valor\"
-                                            
-                       
-                    /*   
-                        Guardar_Articulo : "Guardar_Articulo",
-                              Cantidad : Cantidad,
-                               Articulos : Articulos
-                       */
                     
                     DecimalFormat formatter = new DecimalFormat("###,###.##"); 
+                    
+                    
+                    
+    if (request.getParameter("Listar_Regionales") != null) {
+            try {
+
+                Regional_LN Reg_LN  = new Regional_LN();
+                 Integer Cod_Centralizadora = Integer.parseInt(request.getParameter("Centralizadora"));
+                
+                ResultSet Res_Reg = Reg_LN.Listar_Regional(Cod_Centralizadora);
+
+                out.println("<option value='0'>------Seleccione una Region------</option>");  
+                
+                while (Res_Reg.next()) {
+                    out.println("<option value="+Res_Reg.getString("cod_regional")+">"+Res_Reg.getString("nomb_reg")+"</option>");
+                }
+
+            } catch (Exception e) {
+                out.println(e.getMessage());
+            }
+
+        }
+
                     
                     
                      if(request.getParameter ("Elim_Art_Plan") !=null )
@@ -108,11 +125,48 @@ public class Articulos_Planilla extends HttpServlet {
                         }
                     
                     
-                    
+                     
+                     
+                      if(request.getParameter ("Listar_Cad") !=null )
+                        {  
+                            Integer cod_Reg = Integer.parseInt(request.getParameter("cod_Regional"));
+                     
+                               Cad_LN Cd_LN= new Cad_LN();
+                                out.println("<option value='0'>-----Seleccione un CAD-----</option>");  
+                                try{
+                                        ResultSet Res_Bd=  Cd_LN.Listar_Cad(cod_Reg);
+                                        while(Res_Bd.next()){          
+                                            out.println("<option value="+Res_Bd.getString("id_cad")+">"+Res_Bd.getString("nomb_cad")+"</option>");  
+                                        }
+                                    }catch(Exception e){}
+                               
+                     
+                                        }
+                     
+                     
+                      if(request.getParameter ("Listar_Articulos_cad") !=null )
+                        { 
+                             
+                            Integer Cod_Cad = Integer.parseInt(request.getParameter("cod_cad"));
+                     
+                              Articulo_LN Art_LN= new Articulo_LN();
+                                try{
+                                        ResultSet Res_Bd= Art_LN.Listar_Articulos_Cad(Cod_Cad);
+                                        
+                                       
+          
+                                        while(Res_Bd.next()){          
+
+                                          out.println("<option value="+Res_Bd.getString("idArticulo")+">"+Res_Bd.getString("Nomb_Art")+" = "+Res_Bd.getString("Valor")+"</option>");  
+          
+                                        }
+                                    }catch(Exception e){}
+                        }
+                      
+               
                      if(request.getParameter ("Guardar_Articulo") !=null )
                         {  
-                             try{
-              
+                        try{
                            Planilla_Articulo_EN Plan_Art_EN = new Planilla_Articulo_EN();
                            Planilla_Articulo_LN Plan_Art_LN = new Planilla_Articulo_LN();                      
                            Plan_Art_EN.setArticulo(Integer.parseInt(request.getParameter("Articulos").toString())); 
@@ -173,11 +227,6 @@ public class Articulos_Planilla extends HttpServlet {
                                             //Cod_Planilla
                                             float Valor_Tot=0;
                                              out.println("<br><center><table class='table table-bordered'>");
-                                             
-                                       
-		
-	
-                                             
                                              out.println("<tr bgcolor='#F2F2F2'><td colspan='7' align='center'><b>LISTA DE ARTICULOS DE LA PLANILLA</td>");
                                              out.println("<tr><tr><td align='center'><b>N°</b></td><td align='center'><b>ARTICULO</b></td><td align='center'><b>UNIDAD</b></td><td align='center'><b>CANTIDAD</b></td><td align='center'><b>VALOR</b></td> <td align='center'><b>V. TOTAL</b></td><td align='center'><b>ELIMINAR</b></td>");                                           
                                                 float Valor;
@@ -202,24 +251,14 @@ public class Articulos_Planilla extends HttpServlet {
                                              
               }                   
                                              
-                                             
-                       //  out.println( request.getParameter ("Cod_Plan").toString()  );
-        
-     
-        
-        
-        
-        
-      
-               
-               
+
 
           
    if(request.getParameter ("Listar_Consolidado_Planilla") !=null )
                         {  
             
-            try{
-           Planilla_Soldado_LN Plan_Sold_LN = new Planilla_Soldado_LN();
+          try{
+          Planilla_Soldado_LN Plan_Sold_LN = new Planilla_Soldado_LN();
           out.println(request.getParameter ("Cod_Plan"));
           ResultSet Rs8 =Plan_Sold_LN.Listar_Total_Soldados_Estancia(request.getParameter ("Cod_Plan"));
           out.println("<center><br><table CELLPADDING=2 border='0' width='730px'><tr bgcolor='#F2F2F2'><td align='center'><b>DETALLE</b></td><td align='center'><b>SL</b></td><td align='center'><b>DIAS</b></td><td align='center'><b>V. ESTANCIA</b></td><td align='center'><b>V/TOTAL</b></td></tr>"    );
@@ -231,11 +270,9 @@ public class Articulos_Planilla extends HttpServlet {
          float   Estancia_Abast=0;
          Integer Cant_Sold_Abast=0;
          Integer Dias_Abast=0;
-         
-         
          Integer Cant_Sold_racio=0;
          Integer Dias_racio=0;
-          float Total_Racio=0;
+         float Total_Racio=0;
          
            
          while(Rs8.next()){
@@ -243,15 +280,9 @@ public class Articulos_Planilla extends HttpServlet {
            if(Rs8.getString("Tipo_Ciclo").compareTo("Abastecimiento")==0){
            
              Estancia_Abast= Float.parseFloat(Rs8.getString("Estancia"));
-             
-              
-             
-            Cant_Sold_Abast= Cant_Sold_Abast+ Integer.parseInt(Rs8.getString("Sold"));
-            
-           
+             Cant_Sold_Abast= Cant_Sold_Abast+ Integer.parseInt(Rs8.getString("Sold"));
              Dias_Abast=  Dias_Abast+Integer.parseInt(Rs8.getString("Numb_Dias"));
-             
-               Aux_Total_Abast= Integer.parseInt(Rs8.getString("Numb_Dias"))*Estancia_Abast*Integer.parseInt(Rs8.getString("Sold"));
+             Aux_Total_Abast= Integer.parseInt(Rs8.getString("Numb_Dias"))*Estancia_Abast*Integer.parseInt(Rs8.getString("Sold"));
              Total_Abast=  Total_Abast+Aux_Total_Abast; 
          
                                        
@@ -270,15 +301,9 @@ public class Articulos_Planilla extends HttpServlet {
                 Total_Racio=  Cant_Sold_racio*Estancia_Abast *Dias_racio;  
                
                 }
-           
-           
-                  
                             } 
          
             out.println("<tr><td align='center'><b>TOTAL</b></td><td><center><input  type='text' style='text-align:center;' id='Sl_Abas' value='"+Cant_Sold_Abast+"'  name='Sl_Abas' size='10' readonly></center></td><td><center><input type='text'  style='text-align:center;' id='Dias_Abas' value='"+Dias_Abast+"'  name='Dias_Abas' size='10' readonly></center></td><td><center><input type='text' style='text-align:center;' id='Val_Estancia' value='"+Estancia_Abast+"'  name='Val_Estancia' size='10' readonly></center></td><td align='right'>"+ formatter.format(Total_Abast)  );
-           
-         
-         
             out.println("<tr><td colspan='5'><p> </p></td></tr>");       
              out.println("<tr><td colspan='4'><b>VIVERES SECOS  (60%)</b></td><td align='right'> <input type='text' style='text-align:right;' id='Secos' value='"+Total_Secos_60+"'  name='Secos' size='10' readonly></td>");
              out.println("<tr><td colspan='4'><b>VIVERES FRESCOS  (40%)</b></td><td align='right'><input type='text' style='text-align:right;' id='Frescos' value='"+Total_Fresco_40+"'  name='Frescos' size='10' readonly></td>");
@@ -298,33 +323,8 @@ public class Articulos_Planilla extends HttpServlet {
              
    if(request.getParameter ("Realizar_Ajuste") !=null )
         {  
-            
-       
-            
-            
-            /*
-            
-                       Cod_Plan : Cod_Plan,
-                       Realizar_Ajuste : Realizar_Ajuste,         
-                       Estado_Planilla : Estado_Planill,
-                       Frescos : Frescos,
-                       Secos :  Secos,
-                       Sl_Abas : Sl_Abas,
-                       Dias_Abas :   Dias_Abas,
-                       Val_Estancia : Val_Estancia,
-                       Sl_Rac= :  Sl_Rac,
-                       Dias_Rac :  Dias_Ra
-            */
-            
-           
-            
+ 
             try{
-                
-                
-                /*
-                 Frescos_Ajustado : Frescos_Ajustado,
-                       Secos_Ajustado :  Secos_Ajustado,
-                */
               
             Planilla_LN Plan_LN= new Planilla_LN();
             Planilla_EN Plan_EN = new Planilla_EN();
@@ -344,8 +344,11 @@ public class Articulos_Planilla extends HttpServlet {
             Plan_EN.setDias_Rac(Integer.parseInt(request.getParameter ("Dias_Rac")));
             
             Saldo = Float.parseFloat(request.getParameter ("Sald"));
+            
+            
+            
                    
-            ResultSet Res12=    Art_LN.Articulo_Minimo_Valor();                          
+            ResultSet Res12=    Art_LN.Articulo_Minimo_Valor(Integer.parseInt(request.getParameter ("cod_cad")));                          
             Res12.next();
             Valor_Minimo_Art=Float.parseFloat(Res12.getString("Valor"));
           
@@ -354,19 +357,15 @@ public class Articulos_Planilla extends HttpServlet {
                
                if(Saldo<=Valor_Minimo_Art )
                 {
-                   if(Plan_LN.Realizar_Ajuste_Planilla(Plan_EN)){
-                      out.println("AJUSTE REALIZADO CON EXITO");
-                        
-                       // response.sendRedirect("Abastecimiento.jsp");
-                       
-                    }
+                   if(Plan_LN.Realizar_Ajuste_Planilla(Plan_EN))
+                        {
+                            out.println("AJUSTE REALIZADO CON EXITO");
+                        }
                 }
-               else{out.println("EXISTEN ARTICULOS CON PRECIO POR DEBAJO DE ESTE AJUSTE. ADICIONE MAS ARTICULOS O CANTIDADES");}
-               
-           
-            
-            
-            
+               else{
+                     out.println("1");
+                        }
+ 
             }catch(Exception e){ out.println("Error :"+ e.getMessage());}
             
                 
